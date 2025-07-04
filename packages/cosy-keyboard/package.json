@@ -1,6 +1,6 @@
 {
   "name": "@coffic/cosy-keyboard",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Cozy Framework 的快捷键管理系统",
   "type": "module",
   "main": "./dist/index.js",
