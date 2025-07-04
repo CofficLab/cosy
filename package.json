@@ -15,6 +15,7 @@
     "build": "turbo build",
     "build:types": "turbo build --filter='@coffic/buddy-types' --force",
     "build:deps": "turbo build --filter='@coffic/cosy-*' --filter='@coffic/buddy-types'",
+    "build:auth": "turbo build --filter='@coffic/cosy-auth'",
     "build:logger": "turbo build --filter='@coffic/cosy-logger'",
     "build:rate-limit": "turbo build --filter='@coffic/cosy-rate-limit'",
     "build:keyboard": "turbo build --filter='@coffic/cosy-keyboard'",
