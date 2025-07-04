@@ -1,5 +1,7 @@
 # @coffic/cosy-keyboard
 
+[![Maintainer](https://img.shields.io/badge/Maintainer-blue)](https://github.com/nookery)
+
 `@coffic/cosy-keyboard` 是一个为 `@coffic/cosy-framework` 设计的键盘服务提供者。它负责在 `macOS` 平台下监听特定的快捷键（默认为 `Option` 键或 `Command` 键的双击），并在触发时发布一个全局事件。
 
 ## 设计理念
