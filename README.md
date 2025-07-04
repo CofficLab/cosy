@@ -1,14 +1,9 @@
-# Buddy
+# Cosy
 
-[![DEV](https://img.shields.io/badge/DEV-gray)](README-dev.md)
-[![NPM](https://img.shields.io/badge/NPM-orange)](https://www.npmjs.com/org/coffic)
 [![Coffic](https://img.shields.io/badge/Coffic-green)](https://coffic.cn)
 [![Maintainer](https://img.shields.io/badge/Maintainer-blue)](https://github.com/nookery)
 
-## 📦 常用插件
-
-- [IDE 工作空间插件](https://github.com/CofficLab/buddy-plugin-ide-workspace): 显示当前IDE的工作空间信息
-- [状态插件](https://github.com/CofficLab/buddy-plugin-state): 显示当前应用状态
+Typescript 开发框架。
 
 ## 🤝 贡献
 
