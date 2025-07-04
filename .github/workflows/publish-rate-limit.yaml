@@ -38,7 +38,9 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Build
-        run: pnpm run build:rate-limit
+        run: |
+          pnpm run build:framework
+          pnpm run build:rate-limit
 
       - name: Bump version
         id: version
