@@ -54,3 +54,6 @@ export * from './bootstrap/bootstrap.js';
 
 // Constants
 export * from './constants.js';
+
+// Middleware
+export { LoggingMiddleware } from './log/LoggingMiddleware.js';
