@@ -1,4 +1,4 @@
-import { ILogConfig } from '@coffic/cosy-framework';
+import { ILogConfig } from '@/contract/logger/ILogConfig';
 
 /**
  * 日志配置接口

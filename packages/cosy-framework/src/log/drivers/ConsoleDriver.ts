@@ -3,18 +3,15 @@ import log, {
   type LogMessage,
   type Transport,
 } from 'electron-log';
-import {
-  ILogChannel,
-  ILogChannelConfig,
-  ILogContext,
-  ILogDriver,
-  ILogLevel,
-} from '@coffic/cosy-framework';
+import chalk from 'chalk';
 import { sanitizeLogLevel } from './utils.js';
-import path from 'path';
-import fs from 'fs';
+import { ILogChannel } from '@/contract/logger/ILogChannel.js';
+import { ILogChannelConfig } from '@/contract/logger/ILogChannelConfig.js';
+import { ILogContext } from '@/contract/logger/ILogContext.js';
+import { ILogDriver } from '@/contract/logger/ILogDriver.js';
+import { ILogLevel } from '@/contract/logger/ILogLevel.js';
 
-export class FileChannel implements ILogChannel {
+export class ConsoleChannel implements ILogChannel {
   private logger: any;
   private config: ILogChannelConfig;
   private channelName: string;
@@ -22,28 +19,52 @@ export class FileChannel implements ILogChannel {
   constructor(name: string, config: ILogChannelConfig) {
     this.channelName = name;
     this.config = config;
-    this.logger = log.create({ logId: `file_${name}` });
-    this.logger.transports.console.level = false; // Disable console output for file driver
+    this.logger = log.create({ logId: `console_${name}` });
+    this.logger.transports.file.level = false; // Disable file output for console driver
 
     const sanitizedLevel = sanitizeLogLevel(this.config.level);
-    this.logger.transports.file.level = sanitizedLevel;
+    this.logger.transports.console.level = sanitizedLevel;
+    this.logger.transports.console.format =
+      '[{h}:{i}:{s}.{ms}] [{level}] {text}';
 
-    // 获取 electron-log 的默认日志目录
-    const defaultPath = this.logger.transports.file.getFile().path;
-    const logDir = path.dirname(defaultPath);
+    this.logger.hooks.push(
+      (message: LogMessage, transport: Transport, transportName: string) => {
+        if (transportName === 'console') {
+          const { data, level } = message;
+          let text = data[0];
+          const context = data.slice(1);
 
-    // 为当前通道构建一个专属的日志文件路径
-    const channelLogPath = path.join(logDir, `${name}.log`);
+          const colorizer = {
+            info: chalk.green,
+            warn: chalk.yellow,
+            error: chalk.red,
+            debug: chalk.blue,
+            verbose: chalk.cyan,
+            silly: chalk.magenta,
+          }[level];
 
-    // 确保日志目录存在
-    fs.mkdirSync(logDir, { recursive: true });
+          if (colorizer) {
+            text = colorizer(text);
+          }
 
-    // 覆盖 electron-log 的默认路径解析逻辑，使用我们自定义的路径
-    this.logger.transports.file.resolvePathFn = () => channelLogPath;
+          if (context.length > 0) {
+            const contextStr = chalk.gray(
+              context
+                .map((d: any) =>
+                  typeof d === 'object' ? JSON.stringify(d, null, 2) : String(d)
+                )
+                .join(' ')
+            );
 
-    // 打印最终的日志文件位置
-    console.log(
-      `[cosy-logger] 📝 File log channel '${name}' will write to: ${channelLogPath}`
+            message.data[0] = `${text} ${contextStr}`;
+            message.data.splice(1);
+          } else {
+            message.data[0] = text;
+          }
+        }
+
+        return message;
+      }
     );
   }
 
@@ -102,8 +123,8 @@ export class FileChannel implements ILogChannel {
   }
 }
 
-export class FileDriver implements ILogDriver {
+export class ConsoleDriver implements ILogDriver {
   createChannel(config: ILogChannelConfig): ILogChannel {
-    return new FileChannel(config.name || 'default_file', config);
+    return new ConsoleChannel(config.name || 'default_console', config);
   }
 }

@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@coffic/cosy-framework": "workspace:*",
-    "@coffic/cosy-logger": "workspace:*",
     "@coffic/key-listener": "^1.0.3",
     "@electron-toolkit/utils": "^4.0.0"
   },

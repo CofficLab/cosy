@@ -2,13 +2,12 @@
  * Stack 驱动实现
  * 支持将多个日志通道组合在一起
  */
-import {
-  ILogDriver,
-  ILogChannel,
-  ILogChannelConfig,
-  ILogLevel,
-  ILogContext,
-} from '@coffic/cosy-framework';
+
+import { ILogChannel } from '@/contract/logger/ILogChannel';
+import { ILogChannelConfig } from '@/contract/logger/ILogChannelConfig';
+import { ILogContext } from '@/contract/logger/ILogContext';
+import { ILogDriver } from '@/contract/logger/ILogDriver';
+import { ILogLevel } from '@/contract/logger/ILogLevel';
 
 export class StackChannel implements ILogChannel {
   protected channels: ILogChannel[];

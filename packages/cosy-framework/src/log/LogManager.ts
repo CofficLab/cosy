@@ -2,17 +2,15 @@
  * 日志管理器 - 基于服务容器的实现
  * 参考Laravel的设计，支持依赖注入、驱动扩展和灵活配置
  */
-import {
-  ILogChannel,
-  ILogChannelConfig,
-  ILogConfig,
-  ILogContext,
-  ILogDriver,
-  ILogManager,
-  IContextualLogger,
-  IChannelFactory,
-  ILogLevel,
-} from '@coffic/cosy-framework';
+import { IChannelFactory } from '@/contract/logger/IChannelFactory.js';
+import { IContextualLogger } from '@/contract/logger/IContextualLogger.js';
+import { ILogChannel } from '@/contract/logger/ILogChannel.js';
+import { ILogChannelConfig } from '@/contract/logger/ILogChannelConfig.js';
+import { ILogConfig } from '@/contract/logger/ILogConfig.js';
+import { ILogContext } from '@/contract/logger/ILogContext.js';
+import { ILogDriver } from '@/contract/logger/ILogDriver.js';
+import { ILogLevel } from '@/contract/logger/ILogLevel.js';
+import { ILogManager } from '@/contract/logger/ILogManager.js';
 import { ConsoleDriver } from './drivers/ConsoleDriver.js';
 import { FileDriver } from './drivers/FileDriver.js';
 import { StackDriver } from './drivers/StackDriver.js';

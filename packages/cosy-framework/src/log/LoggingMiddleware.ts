@@ -1,7 +1,6 @@
 import { IpcMainInvokeEvent } from 'electron';
-import { IMiddleware } from '@coffic/cosy-framework';
-import stringify from 'safe-stable-stringify';
 import { LogFacade } from './LogFacade.js';
+import { IMiddleware } from '@/contract/IMiddleware.js';
 
 /**
  * 通用的日志中间件工厂。

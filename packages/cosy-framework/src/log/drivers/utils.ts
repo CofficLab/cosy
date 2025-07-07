@@ -1,5 +1,5 @@
 import { LogLevel } from 'electron-log';
-import { ILogLevel } from '@coffic/cosy-framework';
+import { ILogLevel } from '@/contract/logger/ILogLevel';
 
 const VALID_ELECTRON_LOG_LEVELS: LogLevel[] = [
   'error',

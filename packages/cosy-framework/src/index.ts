@@ -10,6 +10,7 @@ export { ApplicationConfig } from './application/ApplicationConfig.js';
 // Service Provider
 export { ServiceProvider } from './setting/ServiceProvider.js';
 export { SettingServiceProvider } from './setting/SettingServiceProvider.js';
+export { LogServiceProvider } from './log/LogServiceProvider.js';
 
 // Config
 export * from './config/index.js';
@@ -46,6 +47,7 @@ export { RouteFacade } from './routing/RouteFacade.js';
 export { createFacade } from './facades/createFacade.js';
 export { UpdateFacade } from './update/UpdateFacade.js';
 export { SettingFacade } from './facades/SettingFacade.js';
+export { LogFacade } from './log/LogFacade.js';
 
 // Bootstrap
 export * from './bootstrap/bootstrap.js';

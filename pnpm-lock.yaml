@@ -54,7 +54,7 @@ importers:
     devDependencies:
       electron:
         specifier: ^37.1.0
-        version: 37.1.0
+        version: 37.2.0
 
   packages/cosy-framework:
     dependencies:
@@ -107,35 +107,16 @@ importers:
       '@coffic/cosy-framework':
         specifier: workspace:*
         version: link:../cosy-framework
-      '@coffic/cosy-logger':
-        specifier: workspace:*
-        version: link:../cosy-logger
       '@coffic/key-listener':
         specifier: ^1.0.3
-        version: 1.0.3(electron@37.1.0)
+        version: 1.0.4(electron@37.2.0)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@37.1.0)
+        version: 4.0.0(electron@37.2.0)
     devDependencies:
       electron:
         specifier: ^37.1.0
-        version: 37.1.0
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-
-  packages/cosy-logger:
-    dependencies:
-      '@coffic/cosy-framework':
-        specifier: workspace:*
-        version: link:../cosy-framework
-      chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
-      safe-stable-stringify:
-        specifier: ^2.5.0
-        version: 2.5.0
-    devDependencies:
+        version: 37.2.0
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -148,7 +129,7 @@ importers:
     devDependencies:
       electron:
         specifier: ^37.1.0
-        version: 37.1.0
+        version: 37.2.0
 
 packages:
 
@@ -356,8 +337,8 @@ packages:
   '@coffic/buddy-types@1.0.3':
     resolution: {integrity: sha512-Sx1PW/9KmZD2UikDNtWASED+0xLV02PPta+32bZqPJbkWdPi1qZQH8pHeJbxclLX0fnMeHE9KZVESuYx+Z4Olg==}
 
-  '@coffic/key-listener@1.0.3':
-    resolution: {integrity: sha512-RCXm0MI0S2GWyYJNdq+2/QcktrvunOqr1ZgZse1bix1iKSsxuXiYZT7pz4CvLblPgm5esDaq2aV46DJr6r0Mcg==}
+  '@coffic/key-listener@1.0.4':
+    resolution: {integrity: sha512-w43SSjMcudhJxaFt8mel8gdRLRMuSs+1JU9eBnlOvsaNQunCyxRb8ILeNiD0Q7xko1nbOWu0SLqnBTLAceZloA==}
     engines: {node: '>=14.0.0'}
     os: [darwin]
     peerDependencies:
@@ -1322,11 +1303,6 @@ packages:
   electron-updater@6.6.2:
     resolution: {integrity: sha512-Cr4GDOkbAUqRHP5/oeOmH/L2Bn6+FQPxVLZtPbcmKZC63a1F3uu5EefYOssgZXG3u/zBlubbJ5PJdITdMVggbw==}
 
-  electron@37.1.0:
-    resolution: {integrity: sha512-Fcr3yfAw4oU392waVZSlrFUQx4P+h/k31+PRgkBY9tFx9E/zxzdPQQj0achZlG1HRDusw3ooQB+OXb9PvufdzA==}
-    engines: {node: '>= 12.20.55'}
-    hasBin: true
-
   electron@37.2.0:
     resolution: {integrity: sha512-dE6+qeg6SBUVd5d8CD2+GH82kh+gF1v40+hs+U+UOno681NMSGmBtgqwldQRpbvtnQDD7V2M9Cpfr3+Abw7aBg==}
     engines: {node: '>= 12.20.55'}
@@ -2264,10 +2240,6 @@ packages:
   rxjs@7.8.2:
     resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
 
-  safe-stable-stringify@2.5.0:
-    resolution: {integrity: sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==}
-    engines: {node: '>=10'}
-
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
@@ -2878,9 +2850,9 @@ snapshots:
 
   '@coffic/buddy-types@1.0.3': {}
 
-  '@coffic/key-listener@1.0.3(electron@37.1.0)':
+  '@coffic/key-listener@1.0.4(electron@37.2.0)':
     dependencies:
-      electron: 37.1.0
+      electron: 37.2.0
       node-addon-api: 7.1.1
 
   '@cspotcode/source-map-support@0.8.1':
@@ -2888,9 +2860,9 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.9
     optional: true
 
-  '@electron-toolkit/utils@4.0.0(electron@37.1.0)':
+  '@electron-toolkit/utils@4.0.0(electron@37.2.0)':
     dependencies:
-      electron: 37.1.0
+      electron: 37.2.0
 
   '@electron/get@2.0.3':
     dependencies:
@@ -3972,14 +3944,6 @@ snapshots:
       lodash.isequal: 4.5.0
       semver: 7.7.2
       tiny-typed-emitter: 2.1.0
-    transitivePeerDependencies:
-      - supports-color
-
-  electron@37.1.0:
-    dependencies:
-      '@electron/get': 2.0.3
-      '@types/node': 22.16.0
-      extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
 
@@ -5096,8 +5060,6 @@ snapshots:
   rxjs@7.8.2:
     dependencies:
       tslib: 2.8.1
-
-  safe-stable-stringify@2.5.0: {}
 
   safer-buffer@2.1.2: {}
 

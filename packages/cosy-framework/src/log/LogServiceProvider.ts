@@ -3,14 +3,12 @@
  * 负责将日志服务注册到依赖注入容器中
  * 参考Laravel的设计模式
  */
-import {
-  ILogConfig,
-  ILogManager,
-  ServiceProvider,
-  Config,
-  ILogLevel,
-} from '@coffic/cosy-framework';
-import { LogManager } from './LogManager.js';
+
+import { Config } from '@/config/index.js';
+import { ILogConfig } from '@/contract/logger/ILogConfig.js';
+import { ILogLevel } from '@/contract/logger/ILogLevel.js';
+import { ServiceProvider } from '@/setting/ServiceProvider.js';
+import { LogManager } from '@/log/LogManager.js';
 
 export class LogServiceProvider extends ServiceProvider {
   public static LogManager = 'log';

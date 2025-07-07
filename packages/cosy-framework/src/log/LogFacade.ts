@@ -1,4 +1,6 @@
-import { Facade, ILogManager, createFacade } from '@coffic/cosy-framework';
+import { ILogManager } from '@/contract/logger/ILogManager';
+import { createFacade } from '@/facades/createFacade';
+import { Facade } from '@/facades/Facade';
 
 /**
  * Log Facade

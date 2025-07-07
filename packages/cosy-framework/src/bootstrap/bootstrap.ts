@@ -8,11 +8,16 @@ import { Facade } from '../facades/Facade.js';
 import { RouteServiceProvider } from '../routing/RouteServiceProvider.js';
 import { IpcResponse } from '@coffic/buddy-types';
 import { IMiddleware } from '../contract/IMiddleware.js';
+import { LogServiceProvider } from '@/log/LogServiceProvider.js';
 const { ipcMain } = electron;
 
 const defaultMiddleware: IMiddleware[] = [];
 
-const defaultProviders = [ConfigServiceProvider, RouteServiceProvider];
+const defaultProviders = [
+  ConfigServiceProvider,
+  LogServiceProvider,
+  RouteServiceProvider,
+];
 
 /**
  * 创建 Electron 应用
