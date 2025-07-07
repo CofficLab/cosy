@@ -33,7 +33,7 @@ export class UpdateManager implements IUpdateManager {
     });
     autoUpdater.logger = this.logger.createChannel('update', {
       driver: 'file',
-      level: ILogLevel.INFO,
+      level: ILogLevel.DEBUG,
       format: 'structured',
       includeTimestamp: false,
     });
