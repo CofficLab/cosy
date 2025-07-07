@@ -3,11 +3,11 @@
  * 支持将多个日志通道组合在一起
  */
 
-import { ILogChannel } from '@/contract/logger/ILogChannel';
-import { ILogChannelConfig } from '@/contract/logger/ILogChannelConfig';
-import { ILogContext } from '@/contract/logger/ILogContext';
-import { ILogDriver } from '@/contract/logger/ILogDriver';
-import { ILogLevel } from '@/contract/logger/ILogLevel';
+import { ILogChannel } from '@/contract/logger/ILogChannel.js';
+import { ILogChannelConfig } from '@/contract/logger/ILogChannelConfig.js';
+import { ILogContext } from '@/contract/logger/ILogContext.js';
+import { ILogDriver } from '@/contract/logger/ILogDriver.js';
+import { ILogLevel } from '@/contract/logger/ILogLevel.js';
 
 export class StackChannel implements ILogChannel {
   protected channels: ILogChannel[];

@@ -1,4 +1,4 @@
-import { ILogConfig } from '@/contract/logger/ILogConfig';
+import { ILogConfig } from '@/contract/logger/ILogConfig.js';
 
 /**
  * 日志配置接口

@@ -1,5 +1,5 @@
 import { LogLevel } from 'electron-log';
-import { ILogLevel } from '@/contract/logger/ILogLevel';
+import { ILogLevel } from '@/contract/logger/ILogLevel.js';
 
 const VALID_ELECTRON_LOG_LEVELS: LogLevel[] = [
   'error',

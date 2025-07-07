@@ -1,6 +1,6 @@
-import { ILogManager } from '@/contract/logger/ILogManager';
-import { createFacade } from '@/facades/createFacade';
-import { Facade } from '@/facades/Facade';
+import { ILogManager } from '@/contract/logger/ILogManager.js';
+import { createFacade } from '@/facades/createFacade.js';
+import { Facade } from '@/facades/Facade.js';
 
 /**
  * Log Facade
