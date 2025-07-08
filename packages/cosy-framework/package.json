@@ -5,8 +5,13 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "cosy": "./dist/bin.js"
+  },
   "scripts": {
+    "prebuild": "pnpm clean",
     "build": "tsc && tsc-alias",
+    "postbuild": "chmod +x dist/bin.js",
     "build:watch": "tsc --watch",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -26,6 +31,9 @@
   "license": "MIT",
   "dependencies": {
     "@coffic/buddy-it": "^1.1.3",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.0",
+    "drizzle-kit": "^0.31.4",
     "electron-updater": "^6.6.2",
     "jiti": "^2.4.2",
     "reflect-metadata": "^0.2.2"
