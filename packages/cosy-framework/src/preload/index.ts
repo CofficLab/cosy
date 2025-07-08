@@ -5,7 +5,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { IPC_CHANNELS } from '../constants.js';
 import { IPreloadApi } from '../contract/IPreloadApi.js';
-import { IpcResponse } from '@coffic/buddy-types';
+import { IpcResponse } from '@coffic/buddy-it';
 
 /**
  * The implementation of the Preload API that will be exposed to the renderer process.

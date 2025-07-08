@@ -6,7 +6,7 @@ import { IPC_CHANNELS, RouterAbstract } from '../constants.js';
 import { ConfigServiceProvider } from '../config/ConfigServiceProvider.js';
 import { Facade } from '../facades/Facade.js';
 import { RouteServiceProvider } from '../routing/RouteServiceProvider.js';
-import { IpcResponse } from '@coffic/buddy-types';
+import { IpcResponse } from '@coffic/buddy-it';
 import { IMiddleware } from '../contract/IMiddleware.js';
 import { LogServiceProvider } from '@/log/LogServiceProvider.js';
 const { ipcMain } = electron;

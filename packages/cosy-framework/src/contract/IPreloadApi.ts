@@ -2,7 +2,7 @@
  * Preload script contract
  * Defines the shape of the API exposed from the preload script to the renderer process.
  */
-import { IpcResponse } from '@coffic/buddy-types';
+import { IpcResponse } from '@coffic/buddy-it';
 
 export interface IPreloadApi {
   /**

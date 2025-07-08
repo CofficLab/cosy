@@ -27,13 +27,13 @@ export function registerIpcRoutes(): void {
       const context = { viewId, from: 'pluginView' };
       switch (level) {
         case 'info':
-          logger.info(...args, context);
+          logger.info(args.join(' '), context);
           break;
         case 'warn':
-          logger.warn(...args, context);
+          logger.warn(args.join(' '), context);
           break;
         case 'error':
-          logger.error(...args, context);
+          logger.error(args.join(' '), context);
           break;
         default:
           // 对于未知的级别，可以记录为调试信息

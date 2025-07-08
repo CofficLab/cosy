@@ -4,10 +4,7 @@
  */
 import { app, BrowserWindow } from 'electron';
 import { electronApp, optimizer } from '@electron-toolkit/utils';
-// import { pluginManager } from './PluginManager.js';
-import { pluginViewManager } from '../providers/plugin/manager/PluginViewManager.js';
 import { WindowFacade } from '../providers/window/WindowFacade.js';
-// import { updateManager } from './UpdateManager.js';
 
 export class AppManager {
   private mainWindow: BrowserWindow | null = null;
@@ -78,13 +75,7 @@ export class AppManager {
    * 清理资源
    */
   private cleanup(): void {
-    console.debug('清理窗口管理器资源');
     WindowFacade.cleanup();
-
-    console.debug('关闭所有插件视图窗口');
-    pluginViewManager.closeAllViews();
-
-    console.info('应用清理完成，准备退出');
   }
 
   /**

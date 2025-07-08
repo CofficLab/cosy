@@ -133,7 +133,7 @@ export class StateManager {
     } else {
       LogFacade.channel('state').debug(
         '[StateManager] 无法获取当前活跃的应用信息',
-        frontmostApp
+        { frontmostApp }
       );
       this.setOverlaidApp(null);
     }

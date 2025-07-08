@@ -25,7 +25,7 @@
   "author": "Coffic Team",
   "license": "MIT",
   "dependencies": {
-    "@coffic/buddy-types": "^1.0.3",
+    "@coffic/buddy-it": "^1.1.3",
     "electron-updater": "^6.6.2",
     "jiti": "^2.4.2",
     "reflect-metadata": "^0.2.2"
