@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@plugin "daisyui" {
+  logs: false;
+}
+
+/* 拖拽区域实用类 */
+.no-drag-region {
+  -webkit-app-region: no-drag;
+}
+
+.drag-region {
+  -webkit-app-region: drag;
+}

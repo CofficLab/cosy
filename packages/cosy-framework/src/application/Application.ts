@@ -105,6 +105,9 @@ export class Application extends EventEmitter implements IApplication {
     // 启动所有服务提供者
     for (const provider of this._providers) {
       if (provider.boot) {
+        console.log(
+          `${EMOJI} [Application] Booting service provider: ${provider.constructor.name}`
+        );
         this.emit(
           'log',
           'info',
