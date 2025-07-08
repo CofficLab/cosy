@@ -1,4 +1,4 @@
-# Electron Laravel Framework
+# Cosy Framework
 
 🍋 Laravel-inspired framework for Electron applications, providing dependency injection, service providers, middleware, and routing for IPC communication.
 
@@ -132,8 +132,4 @@ router.register(
   Route.handle('plugin:update', handler)
     .middleware(new PluginValidation())
 );
-```
-
-### 5. 创建门面
-
 ```
