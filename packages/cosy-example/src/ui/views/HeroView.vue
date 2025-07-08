@@ -2,7 +2,7 @@
 import { ref, watch, onUnmounted, onMounted, nextTick } from 'vue'
 import { useActionStore } from '@/ui/stores/action-store'
 import { logger } from '@renderer/utils/logger'
-import { ViewBounds } from '@coffic/buddy-types'
+import { ViewBounds } from '@coffic/buddy-it'
 import { SendableAction } from '@/types/sendable-action'
 import { viewIpc } from '@renderer/ipc/view-ipc'
 import { useElementBounding, useAsyncState, useDebounceFn, useTimeoutFn } from '@vueuse/core'

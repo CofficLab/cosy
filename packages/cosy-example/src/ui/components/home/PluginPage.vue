@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { SendablePlugin } from '@/types/sendable-plugin'
 import { viewIpc } from '@/ui/ipc/view-ipc'
-import { AppEvents } from '@coffic/buddy-types'
+import { AppEvents } from '@coffic/buddy-it'
 
 interface Props {
     plugin: SendablePlugin
