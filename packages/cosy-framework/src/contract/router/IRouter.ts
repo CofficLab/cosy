@@ -4,7 +4,6 @@
  */
 
 import { IpcMainInvokeEvent } from 'electron';
-import { IRouteHandler } from './IRouteHandler.js';
 import { IMiddleware } from '../IMiddleware.js';
 import { IRouteConfig } from './IRouteConfig.js';
 import { IRouteGroup } from './IRouteGroup.js';
