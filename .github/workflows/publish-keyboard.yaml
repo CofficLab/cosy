@@ -7,6 +7,10 @@ on:
     paths:
       - '.github/workflows/publish-keyboard.yaml'
       - 'packages/cosy-keyboard/**'
+  workflow_run:
+    workflows: ['Publish Cosy Framework']
+    types:
+      - completed # 只有当 Publish Cosy Framework 工作流完成时，才会触发这个工作流
 
 jobs:
   build-and-publish:
