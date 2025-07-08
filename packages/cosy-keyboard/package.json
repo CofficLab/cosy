@@ -16,12 +16,14 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@coffic/cosy-framework": "workspace:*",
     "@coffic/key-listener": "^1.0.3",
     "@electron-toolkit/utils": "^4.0.0"
   },
   "devDependencies": {
     "electron": "^37.1.0",
     "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "@coffic/cosy-framework": "workspace:*"
   }
 }
