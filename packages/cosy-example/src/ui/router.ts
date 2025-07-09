@@ -9,7 +9,7 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 import PluginStoreView from '@/ui/views/MarketView.vue';
-import { useAppStore } from '@/ui/stores/app-store';
+import { useAppStore } from '@/ui/stores/app-store.js';
 import HomeView from '@/ui/views/HomeView.vue';
 import HeroView from '@/ui/views/HeroView.vue';
 

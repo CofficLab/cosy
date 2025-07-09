@@ -1,4 +1,4 @@
-import { IModel } from './IModel';
+import { IModel } from '@/main/service/chat/contract/IModel.js';
 
 export enum ProviderType {
   DEEPSEEK = 'deepseek',

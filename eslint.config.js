@@ -5,11 +5,10 @@ import tsParser from '@typescript-eslint/parser';
 
 export default defineConfig([
   {
-    files: ['src/**/*.ts'],
+    files: ['packages/**/*.ts'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json',
         sourceType: 'module',
         ecmaVersion: 'latest',
       },
@@ -31,5 +30,13 @@ export default defineConfig([
         },
       ],
     },
+    ignores: [
+      'dist/**',
+      'build/**',
+      'out/**',
+      'packages/*/dist/**',
+      'packages/*/build/**',
+      'packages/*/out/**',
+    ],
   },
 ]);

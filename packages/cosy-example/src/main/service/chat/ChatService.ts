@@ -4,13 +4,16 @@ import {
   wrapLanguageModel,
   generateText,
 } from 'ai';
-import { getTools } from './tools';
+import { getTools } from '@/main/service/chat/tools.js';
 import { createDeepSeek } from '@ai-sdk/deepseek';
 import { createAnthropic } from '@ai-sdk/anthropic';
-import { createLogMiddleware } from './middleware/log.mid';
-import { PROVIDERS } from './constants';
-import { IModel } from './contract/IModel';
-import { IProvider, ProviderType } from './contract/IProvider';
+import { createLogMiddleware } from '@/main/service/chat/middleware/log.mid.js';
+import { PROVIDERS } from '@/main/service/chat/constants.js';
+import { IModel } from '@/main/service/chat/contract/IModel.js';
+import {
+  IProvider,
+  ProviderType,
+} from '@/main/service/chat/contract/IProvider.js';
 import { createOpenAI } from '@ai-sdk/openai';
 import type { LanguageModelV1, StreamTextResult, UIMessage } from 'ai';
 import type { IChatLogger } from './contract/IChatLogger.js';
@@ -56,7 +59,7 @@ export class ChatService {
     user?: any,
     conversationId?: string
   ): StreamTextResult<any, any> {
-    let model = this.getModel(modelId, key);
+    const model = this.getModel(modelId, key);
     const conversationRepo = this.conversationRepo;
     const logger = this.logger;
 

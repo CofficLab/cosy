@@ -1,6 +1,6 @@
 import { tool } from 'ai';
 import { z } from 'zod';
-import { IChatLogger } from '../contract/IChatLogger';
+import { IChatLogger } from '@/main/service/chat/contract/IChatLogger.js';
 
 /**
  * 获取当前时间的工具。

@@ -1,5 +1,5 @@
 import { useRouter } from 'vue-router';
-import { useAppStore } from '@/ui/stores/app-store';
+import { useAppStore } from '@/ui/stores/app-store.js';
 
 export function useNavigation() {
   const router = useRouter();

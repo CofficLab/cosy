@@ -1,6 +1,6 @@
-import { IMiddleware } from '../IMiddleware';
-import { IRouteHandler } from './IRouteHandler';
-import { IValidationRules } from './IValidation';
+import { IMiddleware } from '../IMiddleware.js';
+import { IRouteHandler } from './IRouteHandler.js';
+import { IValidationRules } from './IValidation.js';
 
 /**
  * 路由配置接口

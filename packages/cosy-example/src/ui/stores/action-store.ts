@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
-import { actionIpc } from '@renderer/ipc/action-ipc';
+import { actionIpc } from '@renderer/ipc/action-ipc.js';
 import { AppEvents, ActionResult } from '@coffic/buddy-it';
-import { SendableAction } from '@/types/sendable-action';
-import { useErrorStore } from './error-store.js';
+import { SendableAction } from '@/types/sendable-action.js';
+import { useErrorStore } from '@/ui/stores/error-store.js';
 
 const ipc = window.ipc;
 const logger = console;

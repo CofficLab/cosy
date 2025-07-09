@@ -1,4 +1,4 @@
-import { IRouteConfig } from './IRouteConfig';
+import { IRouteConfig } from './IRouteConfig.js';
 
 /**
  * 路由匹配结果

@@ -1,5 +1,5 @@
 import { ILogManager } from '@coffic/cosy-framework';
-import { IAIManager } from './IAIManager';
+import { IAIManager } from '@/main/providers/ai/IAIManager.js';
 
 export interface IAIServerConfig {
   port: number;

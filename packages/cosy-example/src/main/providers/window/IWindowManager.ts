@@ -1,4 +1,4 @@
-import { IWindowConfig } from './IWindowConfig';
+import { IWindowConfig } from '@/main/providers/window/IWindowConfig.js';
 
 /**
  * 窗口管理器接口
