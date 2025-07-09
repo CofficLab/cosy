@@ -13,7 +13,7 @@ export class ConsoleChannel implements ILogChannel {
 
   constructor(config: ILogChannelConfig) {
     this.config = config;
-    this.logger = log.create({ logId: `console_${name}` });
+    this.logger = log.create({ logId: `console` });
     this.logger.transports.file.level = false; // Disable file output for console driver
 
     const sanitizedLevel = sanitizeLogLevel(this.config.level);
