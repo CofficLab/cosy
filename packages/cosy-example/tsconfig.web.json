@@ -43,7 +43,7 @@
             ],
             "@renderer/types/*": [
                 "src/ui/types/*"
-            ],
+            ]
         }
-    },
+    }
 }

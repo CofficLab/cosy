@@ -53,6 +53,6 @@ if (process.contextIsolated) {
   }
 } else {
   // For non-context-isolated environments (less secure)
-  // @ts-ignore (define in dts)
+  // @ts-expect-error (define in dts)
   window.ipc = preloadApi;
 }

@@ -7,8 +7,7 @@
         "src/preload/**/*",
         "src/types/**/*",
         "native/**/*",
-        "../packages/cosy-foundation/src/window/contracts/WindowContract.ts",
-        "ui",
+        "ui"
     ],
     "compilerOptions": {
         "composite": true,
@@ -21,7 +20,7 @@
         "paths": {
             "@/*": [
                 "./src/*"
-            ],
+            ]
         }
     }
 }
