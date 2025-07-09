@@ -10,6 +10,7 @@
   },
   "scripts": {
     "prebuild": "pnpm clean",
+    "cosy": "cosy",
     "build": "tsc && tsc-alias",
     "postbuild": "chmod +x dist/bin.js",
     "build:watch": "tsc --watch",
