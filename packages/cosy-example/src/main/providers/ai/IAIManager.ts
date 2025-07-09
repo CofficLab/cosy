@@ -1,5 +1,5 @@
-import { IModel } from '@/main/service/chat/contract/IModel';
-import { IProvider } from '@/main/service/chat/contract/IProvider';
+import { IModel } from '@/main/service/chat/contract/IModel.js';
+import { IProvider } from '@/main/service/chat/contract/IProvider.js';
 import { AIModelType, IAIModelConfig } from '@coffic/buddy-it';
 import { StreamTextResult, UIMessage } from 'ai';
 

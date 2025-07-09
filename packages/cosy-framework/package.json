@@ -16,7 +16,6 @@
     "build:watch": "tsc --watch",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint src/**/*.ts",
     "clean": "rimraf dist"
   },
   "keywords": [
@@ -32,23 +31,22 @@
   "license": "MIT",
   "dependencies": {
     "@coffic/buddy-it": "^1.1.3",
+    "boxen": "^8.0.1",
     "chalk": "^4.0.0",
     "cli-table3": "^0.6.5",
     "commander": "^14.0.0",
     "drizzle-kit": "^0.31.4",
+    "electron-log": "^5.4.1",
     "electron-updater": "^6.6.2",
     "jiti": "^2.4.2",
+    "mitt": "^3.0.1",
     "ora": "^8.2.0",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.10",
-    "@typescript-eslint/eslint-plugin": "^8.35.1",
-    "@typescript-eslint/parser": "^8.35.1",
     "electron": "^37.2.0",
-    "eslint": "^9.0.0",
-    "eslint-plugin-import": "^2.32.0",
     "jest": "^30.0.4",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.4.0",
@@ -65,56 +63,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    },
-    "./application": {
-      "import": "./dist/application/index.js",
-      "require": "./dist/application/index.js",
-      "types": "./dist/application/index.d.ts"
-    },
-    "./container": {
-      "import": "./dist/container/index.js",
-      "require": "./dist/container/index.js",
-      "types": "./dist/container/index.d.ts"
-    },
-    "./providers": {
-      "import": "./dist/providers/index.js",
-      "require": "./dist/providers/index.js",
-      "types": "./dist/providers/index.d.ts"
-    },
-    "./router": {
-      "import": "./dist/router/index.js",
-      "require": "./dist/router/index.js",
-      "types": "./dist/router/index.d.ts"
-    },
-    "./middleware": {
-      "import": "./dist/middleware/index.js",
-      "require": "./dist/middleware/index.js",
-      "types": "./dist/middleware/index.d.ts"
-    },
-    "./facades": {
-      "import": "./dist/facades/index.js",
-      "require": "./dist/facades/index.js",
-      "types": "./dist/facades/index.d.ts"
-    },
-    "./constants": {
-      "import": "./dist/constants.js",
-      "require": "./dist/constants.js",
-      "types": "./dist/constants.d.ts"
-    },
-    "./contracts/PreloadContract": {
-      "import": "./dist/contracts/PreloadContract.js",
-      "require": "./dist/contracts/PreloadContract.js",
-      "types": "./dist/contracts/PreloadContract.d.ts"
-    },
-    "./update": {
-      "import": "./dist/update/index.js",
-      "require": "./dist/update/index.js",
-      "types": "./dist/update/index.d.ts"
-    },
-    "./contracts/logger": {
-      "import": "./dist/contracts/logger/index.js",
-      "require": "./dist/contracts/logger/index.js",
-      "types": "./dist/contracts/logger/index.d.ts"
     }
   }
 }

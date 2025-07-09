@@ -1,20 +1,12 @@
 #!/usr/bin/env node
 
 import { createCliApp } from './bootstrap/cli.js';
-import { configureEnvCommand } from './cli/commands/env-commander.js';
-import {
-  configureCustomCommand,
-  configureProjectInfoCommand,
-} from './cli/commands/example-custom-command.js';
+import { configureEnvCommand } from './commands/env-commander.js';
+import { configureCustomCommand } from './commands/example-command.js';
+import { configureProjectInfoCommand } from './commands/project-command.js';
 
 /**
- * Cosy Framework CLI 入口点 (Commander.js 版本)
- *
- * 使用 Commander.js 构建的现代化 CLI 界面：
- * - 自动帮助生成
- * - 类型安全的参数解析
- * - 美观的用户界面
- * - 强大的错误处理
+ * Cosy Framework CLI 入口点
  */
 async function main() {
   try {

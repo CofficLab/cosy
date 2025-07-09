@@ -1,4 +1,4 @@
-import { getLocation } from './tools-client/location';
+import { getLocation } from '@/main/service/chat/tools-client/location.js';
 
 export function clientToolCall(toolName: string) {
   if (toolName === 'getLocation') {

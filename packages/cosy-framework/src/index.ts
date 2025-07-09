@@ -11,6 +11,7 @@ export { ApplicationConfig } from './application/ApplicationConfig.js';
 export { ServiceProvider } from './setting/ServiceProvider.js';
 export { SettingServiceProvider } from './setting/SettingServiceProvider.js';
 export { LogServiceProvider } from './log/LogServiceProvider.js';
+export { UpdateServiceProvider } from './update/UpdateServiceProvider.js';
 
 // Config
 export * from './config/index.js';

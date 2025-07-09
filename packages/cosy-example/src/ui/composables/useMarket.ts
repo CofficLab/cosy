@@ -1,10 +1,10 @@
 import { computed, ref } from 'vue';
-import { useMarketStore } from '../stores/market-store';
+import { useMarketStore } from '@/ui/stores/market-store.js';
 import { useStorage } from '@vueuse/core';
-import { useAlert } from './useAlert';
-import { marketIpc } from '../ipc/market-ipc';
-import { fileIpc } from '../ipc/file-ipc';
-import { MarketTab } from '@/types/market-type';
+import { useAlert } from '@/ui/composables/useAlert.js';
+import { marketIpc } from '@/ui/ipc/market-ipc.js';
+import { fileIpc } from '@/ui/ipc/file-ipc.js';
+import { MarketTab } from '@/types/market-type.js';
 
 export function useMarket() {
   const { error } = useAlert();
@@ -117,7 +117,7 @@ export function useMarket() {
 
   // 打开当前的插件目录
   const openCurrentPluginDirectory = () => {
-    let currentDirectory = marketStore.getCurrentPluginDirectory();
+    const currentDirectory = marketStore.getCurrentPluginDirectory();
     if (currentDirectory) {
       fileIpc.openFolder(currentDirectory);
     } else {

@@ -14,7 +14,7 @@ import {
   SettingServiceProvider,
   LoggingMiddleware,
 } from '@coffic/cosy-framework';
-import { UpdateServiceProvider } from '@coffic/cosy-framework/update';
+import { UpdateServiceProvider } from '@coffic/cosy-framework';
 import { KeyboardServiceProvider } from '@coffic/cosy-keyboard';
 import { McpServiceProvider } from '../providers/mcp/McpServiceProvider.js';
 import { WindowServiceProvider } from '../providers/window/WindowServiceProvider.js';

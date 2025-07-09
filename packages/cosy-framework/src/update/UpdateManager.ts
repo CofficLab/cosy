@@ -1,6 +1,6 @@
 import pkg from 'electron-updater';
 const { autoUpdater } = pkg;
-import { dialog } from 'electron';
+import { BrowserWindow, dialog } from 'electron';
 import { IUpdateConfig } from './IUpdateConfig.js';
 import { IApplication } from '../contract/IApplication.js';
 import { ConfigManager } from '../config/types.js';
@@ -9,7 +9,7 @@ import { ILogLevel } from '../contract/logger/ILogLevel.js';
 import { ILogManager } from '../contract/logger/ILogManager.js';
 
 export class UpdateManager implements IUpdateManager {
-  private mainWindow: Electron.BrowserWindow | null = null;
+  private mainWindow: BrowserWindow | null = null;
 
   constructor(
     private readonly app: IApplication,
@@ -20,7 +20,7 @@ export class UpdateManager implements IUpdateManager {
   public boot(): void {
     // We need a better way to get the main window.
     // This is a temporary solution.
-    this.app.on('app:window-created', (window: Electron.BrowserWindow) => {
+    this.app.on('app:window-created', (window: BrowserWindow) => {
       this.mainWindow = window;
     });
 
@@ -138,7 +138,7 @@ export class UpdateManager implements IUpdateManager {
   public async checkForUpdates(): Promise<string> {
     this.logger.channel('updater').info('Manually checking for updates...');
 
-    let result = await autoUpdater.checkForUpdates();
+    const result = await autoUpdater.checkForUpdates();
     if (result) {
       return result.updateInfo.version;
     }

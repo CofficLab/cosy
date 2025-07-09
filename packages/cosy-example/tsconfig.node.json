@@ -7,11 +7,9 @@
         "src/preload/**/*",
         "src/types/**/*",
         "native/**/*",
-        "../packages/cosy-foundation/src/window/contracts/WindowContract.ts",
-        "ui",
+        "ui"
     ],
     "compilerOptions": {
-        "allowImportingTsExtensions": true,
         "composite": true,
         "module": "ESNext",
         "moduleResolution": "bundler",
@@ -22,7 +20,7 @@
         "paths": {
             "@/*": [
                 "./src/*"
-            ],
+            ]
         }
     }
 }

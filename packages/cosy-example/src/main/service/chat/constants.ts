@@ -1,4 +1,7 @@
-import { IProvider, ProviderType } from './contract/IProvider';
+import {
+  IProvider,
+  ProviderType,
+} from '@/main/service/chat/contract/IProvider.js';
 
 export const PROVIDERS: IProvider[] = [
   {

@@ -1,8 +1,8 @@
 import z from 'zod';
-import { createUserStatusTool } from './tools/userStatus';
-import { createWeatherTool } from './tools/weather';
-import { createTimeTool } from './tools/time';
-import { IChatLogger } from './contract/IChatLogger';
+import { createUserStatusTool } from './tools/userStatus.js';
+import { createWeatherTool } from './tools/weather.js';
+import { createTimeTool } from './tools/time.js';
+import { IChatLogger } from '@/main/service/chat/contract/IChatLogger.js';
 
 export const getTools = (logger: IChatLogger | null, user?: any) => ({
   weatherTool: createWeatherTool(logger),

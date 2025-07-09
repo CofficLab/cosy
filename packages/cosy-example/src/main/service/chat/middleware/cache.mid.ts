@@ -1,5 +1,5 @@
 import type { LanguageModelV1Middleware } from 'ai';
-import { ICacheRepo } from '../contract/ICacheRepo';
+import { ICacheRepo } from '@/main/service/chat/contract/ICacheRepo.js';
 
 /**
  * 创建缓存中间件的工厂函数

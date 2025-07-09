@@ -1,4 +1,4 @@
-import { AIServer } from './AIServer';
+import { AIServer } from '@/main/providers/ai/AIServer.js';
 
 export function createAIRouter(server: AIServer) {
   server.app.get('/health', (_req, res) => {

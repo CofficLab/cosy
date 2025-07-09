@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { AppEvents, SuperAction, SuperApp } from '@coffic/buddy-it';
-import { stateApi } from '../ipc/state-api';
-import { ViewType } from '../router';
+import { stateApi } from '../ipc/state-api.js';
+import { ViewType } from '../router.js';
 
 const ipc = window.ipc;
 

@@ -179,7 +179,7 @@ export class Router implements IRouter {
 
           try {
             // 执行中间件链
-            let result = await config.handler(event, ...args);
+            const result = await config.handler(event, ...args);
             return {
               success: true,
               data: result,

@@ -1,4 +1,4 @@
-import { IMiddleware } from '../IMiddleware';
+import { IMiddleware } from '../IMiddleware.js';
 
 /**
  * 路由分组配置

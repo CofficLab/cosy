@@ -1,5 +1,5 @@
 import type { LanguageModelV1Middleware, LanguageModelV1StreamPart } from 'ai';
-import { IChatLogger } from '../contract/IChatLogger';
+import { IChatLogger } from '@/main/service/chat/contract/IChatLogger.js';
 
 export function createLogMiddleware(
   logger: IChatLogger | null,

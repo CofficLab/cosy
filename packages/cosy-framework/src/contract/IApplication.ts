@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
-import { ServiceContainer } from '../container/ServiceContainer';
-import { ApplicationConfig } from '../application/ApplicationConfig';
-import { ServiceProvider } from '../setting/ServiceProvider';
+import { ServiceContainer } from '../container/ServiceContainer.js';
+import { ApplicationConfig } from '../application/ApplicationConfig.js';
+import { ServiceProvider } from '../setting/ServiceProvider.js';
 
 export interface IApplication extends EventEmitter {
   boot(): Promise<void>;
