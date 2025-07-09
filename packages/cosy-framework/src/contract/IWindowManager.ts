@@ -1,4 +1,4 @@
-import { IWindowConfig } from '@/main/providers/window/IWindowConfig.js';
+import { IWindowConfig } from '@/contract/IWindowConfig.js';
 import { BrowserWindow } from 'electron';
 
 /**

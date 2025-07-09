@@ -1,6 +1,6 @@
 import { Facade } from '@coffic/cosy-framework';
 import { createFacade } from '@coffic/cosy-framework';
-import { IWindowManager } from './IWindowManager.js';
+import { IWindowManager } from '../../../../../cosy-framework/src/contract/IWindowManager.js';
 
 /**
  * 路由门面基类

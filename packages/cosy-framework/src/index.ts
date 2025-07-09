@@ -38,6 +38,8 @@ export { ILogConfig } from './contract/logger/ILogConfig.js';
 export { IContextualLogger } from './contract/logger/IContextualLogger.js';
 export { ISettingManager } from './contract/setting/ISettingManager.js';
 export { IPreloadApi } from './contract/IPreloadApi.js';
+export { IWindowManager } from './contract/IWindowManager.js';
+export { IWindowConfig } from './contract/IWindowConfig.js';
 
 // Setting
 export { SettingManager } from './setting/SettingManager.js';

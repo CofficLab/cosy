@@ -2,8 +2,7 @@ import { ServiceProvider } from '@coffic/cosy-framework';
 import { Config, ILogManager } from '@coffic/cosy-framework';
 import { createWindowManager } from './WindowManager.js';
 import { app } from 'electron';
-import { IWindowConfig } from './IWindowConfig.js';
-import { IWindowManager } from './IWindowManager.js';
+import { IWindowConfig, IWindowManager } from '@coffic/cosy-framework';
 
 export class WindowServiceProvider extends ServiceProvider {
   /**

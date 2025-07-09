@@ -2,8 +2,7 @@
  * 窗口管理器的契约接口
  * 定义了窗口管理相关的核心功能
  */
-import { IWindowConfig } from '@/main/providers/window/IWindowConfig.js';
-import { IWindowManager } from '@/main/providers/window/IWindowManager.js';
+import { IWindowConfig, IWindowManager } from '@coffic/cosy-framework';
 
 /**
  * 窗口管理器工厂契约

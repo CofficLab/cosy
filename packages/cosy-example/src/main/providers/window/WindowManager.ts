@@ -4,7 +4,7 @@ import { is } from '@electron-toolkit/utils';
 import { join } from 'path';
 import { Application, ILogManager } from '@coffic/cosy-framework';
 import { IWindowConfig } from './IWindowConfig.js';
-import { IWindowManager } from './IWindowManager.js';
+import { IWindowManager } from '../../../../../cosy-framework/src/contract/IWindowManager.js';
 
 /**
  * 窗口管理器

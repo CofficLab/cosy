@@ -3,34 +3,27 @@ const { autoUpdater } = pkg;
 import { BrowserWindow, dialog } from 'electron';
 import { IUpdateConfig } from './IUpdateConfig.js';
 import { IApplication } from '../contract/IApplication.js';
-import { ConfigManager } from '../config/types.js';
 import { IUpdateManager } from './IUpdateManager.js';
 import { ILogLevel } from '../contract/logger/ILogLevel.js';
 import { ILogManager } from '../contract/logger/ILogManager.js';
+import { IWindowManager } from '@/contract/IWindowManager.js';
 
 export class UpdateManager implements IUpdateManager {
-  private mainWindow: BrowserWindow | null = null;
-
   constructor(
     private readonly app: IApplication,
-    private readonly config: ConfigManager,
-    private readonly logger: ILogManager
+    private readonly logger: ILogManager,
+    private updaterConfig?: IUpdateConfig
   ) {}
 
   public boot(): void {
-    // We need a better way to get the main window.
-    // This is a temporary solution.
-    this.app.on('app:window-created', (window: BrowserWindow) => {
-      this.mainWindow = window;
-    });
-
-    const updaterConfig = this.config.get<IUpdateConfig>('updater', {
+    const updaterConfig = this.updaterConfig ?? {
       allowDowngrade: true,
       allowPrerelease: true,
-      forceDevUpdateConfig: false,
+      forceDevUpdateConfig: true,
       autoCheck: true,
       autoCheckDelay: 3000,
-    });
+    };
+
     autoUpdater.logger = this.logger.createChannel('update', {
       driver: 'file',
       level: ILogLevel.DEBUG,
@@ -94,10 +87,18 @@ export class UpdateManager implements IUpdateManager {
   }
 
   private notifyUpdateAvailable(info: any): void {
-    if (!this.mainWindow) return;
+    const mainWindow = this.getMainWindow();
+    if (!mainWindow) {
+      this.logger.channel('updater').warn('Main window not found');
+      return;
+    }
+
+    this.logger.channel('updater').info('Notifying update available', {
+      version: info.version,
+    });
 
     dialog
-      .showMessageBox(this.mainWindow, {
+      .showMessageBox(mainWindow, {
         type: 'info',
         title: 'Update Available',
         message: `A new version ${info.version} is available.`,
@@ -113,10 +114,18 @@ export class UpdateManager implements IUpdateManager {
   }
 
   private notifyUpdateReady(info: any): void {
-    if (!this.mainWindow) return;
+    const mainWindow = this.getMainWindow();
+    if (!mainWindow) {
+      this.logger.channel('updater').warn('Main window not found');
+      return;
+    }
+
+    this.logger.channel('updater').info('Notifying update ready', {
+      version: info.version,
+    });
 
     dialog
-      .showMessageBox(this.mainWindow, {
+      .showMessageBox(mainWindow, {
         type: 'info',
         title: 'Install Update',
         message: `Version ${info.version} is ready to install.`,
@@ -140,9 +149,19 @@ export class UpdateManager implements IUpdateManager {
 
     const result = await autoUpdater.checkForUpdates();
     if (result) {
+      this.logger.channel('updater').info('Update check result', {
+        version: result.updateInfo.version,
+      });
       return result.updateInfo.version;
     }
 
+    this.logger
+      .channel('updater')
+      .warn('Update check result is null, means the updater is disabled');
     return '更新被禁用';
+  }
+
+  private getMainWindow(): BrowserWindow | null {
+    return this.app.make<IWindowManager>('window.manager').getMainWindow();
   }
 }
