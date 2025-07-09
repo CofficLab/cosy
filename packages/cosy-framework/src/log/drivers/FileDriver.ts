@@ -14,7 +14,7 @@ export class FileChannel implements ILogChannel {
 
   constructor(config: ILogChannelConfig) {
     this.config = config;
-    this.logger = log.create({ logId: `file_${name}` });
+    this.logger = log.create({ logId: `file` });
     this.logger.transports.console.level = false; // Disable console output for file driver
 
     const sanitizedLevel = sanitizeLogLevel(this.config.level);
@@ -25,7 +25,7 @@ export class FileChannel implements ILogChannel {
     const logDir = path.dirname(defaultPath);
 
     // 为当前通道构建一个专属的日志文件路径
-    const channelLogPath = path.join(logDir, `${name}.log`);
+    const channelLogPath = path.join(logDir, `cosy.log`);
 
     // 确保日志目录存在
     fs.mkdirSync(logDir, { recursive: true });
@@ -35,7 +35,7 @@ export class FileChannel implements ILogChannel {
 
     // 打印最终的日志文件位置
     console.log(
-      `[cosy-logger] 📝 File log channel '${name}' will write to: ${channelLogPath}`
+      `[cosy-logger] 📝 File log channel 'cosy' will write to: ${channelLogPath}`
     );
   }
 
