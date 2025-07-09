@@ -9,7 +9,6 @@ import { RouteServiceProvider } from '../routing/RouteServiceProvider.js';
 import { IpcResponse } from '@coffic/buddy-it';
 import { IMiddleware } from '../contract/IMiddleware.js';
 import { LogServiceProvider } from '@/log/LogServiceProvider.js';
-import { CommanderApp } from '@/cli/commander-app.js';
 const { ipcMain } = electron;
 
 const defaultMiddleware: IMiddleware[] = [];

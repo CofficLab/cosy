@@ -70,7 +70,7 @@ export class RouteRegistrar implements IRouteRegistrar {
   }
 
   handle(channel: string, handler: IRouteHandler): Route {
-    const route = new Route(this.router, { channel, handler });
+    const route = new Route({ channel, handler });
     this.applyGroupContext(route);
     this.router.register(route.getConfig());
     return route;

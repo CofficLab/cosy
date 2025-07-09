@@ -1,4 +1,4 @@
-import pkg, { UpdateCheckResult } from 'electron-updater';
+import pkg from 'electron-updater';
 const { autoUpdater } = pkg;
 import { dialog } from 'electron';
 import { IUpdateConfig } from './IUpdateConfig.js';

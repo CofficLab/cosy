@@ -3,7 +3,7 @@ import {
   ActiveApplication,
   getFrontmostApplication,
 } from '@coffic/active-app-monitor';
-import { AppEvents, SuperApp } from '@coffic/buddy-types';
+import { AppEvents, SuperApp } from '@coffic/buddy-it';
 import { LogFacade } from '@coffic/cosy-framework';
 
 /**

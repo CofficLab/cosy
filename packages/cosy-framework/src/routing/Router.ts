@@ -60,7 +60,7 @@ export class Router implements IRouter {
    * 通用路由注册方法
    */
   handle(channel: string, handler: IRouteHandler): Route {
-    const route = new Route(this, { channel, handler });
+    const route = new Route({ channel, handler });
     this.register(route.getConfig());
     return route;
   }

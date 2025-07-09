@@ -65,7 +65,7 @@ jobs:
           cd packages/cosy-framework
           git pull
           git add package.json
-          git commit -m "chore(buddy-types): bump version to ${{ steps.version.outputs.new_version }}"
+          git commit -m "🎨 Chore: bump version to ${{ steps.version.outputs.new_version }}"
           git tag "cosy-framework/v${{ steps.version.outputs.new_version }}"
           git push
           git push --tags

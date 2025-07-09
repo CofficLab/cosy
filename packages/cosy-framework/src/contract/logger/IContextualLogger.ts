@@ -1,5 +1,3 @@
-import { ILogContext } from './ILogContext.js';
-
 /**
  * 上下文日志记录器接口
  * 定义了在特定上下文中记录日志的方法

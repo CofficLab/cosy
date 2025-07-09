@@ -7,17 +7,11 @@ import { IMiddleware } from '../contract/IMiddleware.js';
 import { IRouteConfig } from '../contract/router/IRouteConfig.js';
 import { IRouteHandler } from '../contract/router/IRouteHandler.js';
 import { IValidationRules } from '../contract/router/IValidation.js';
-import { Router } from './Router.js';
 
 export class Route {
   private config: IRouteConfig;
-  private router: Router;
 
-  constructor(
-    router: Router,
-    config: { channel: string; handler: IRouteHandler }
-  ) {
-    this.router = router;
+  constructor(config: { channel: string; handler: IRouteHandler }) {
     this.config = {
       ...config,
       middleware: [],
@@ -95,34 +89,34 @@ export class Route {
    */
   static handle(channel: string, handler: IRouteHandler): Route {
     console.log('🌿 创建新路由', channel);
-    return new Route(new Router(), { channel, handler });
+    return new Route({ channel, handler });
   }
 
   /**
    * 静态方法：创建GET类型的路由（用于查询操作）
    */
   static get(channel: string, handler: IRouteHandler): Route {
-    return new Route(new Router(), { channel, handler });
+    return new Route({ channel, handler });
   }
 
   /**
    * 静态方法：创建POST类型的路由（用于创建操作）
    */
   static post(channel: string, handler: IRouteHandler): Route {
-    return new Route(new Router(), { channel, handler });
+    return new Route({ channel, handler });
   }
 
   /**
    * 静态方法：创建PUT类型的路由（用于更新操作）
    */
   static put(channel: string, handler: IRouteHandler): Route {
-    return new Route(new Router(), { channel, handler });
+    return new Route({ channel, handler });
   }
 
   /**
    * 静态方法：创建DELETE类型的路由（用于删除操作）
    */
   static delete(channel: string, handler: IRouteHandler): Route {
-    return new Route(new Router(), { channel, handler });
+    return new Route({ channel, handler });
   }
 }

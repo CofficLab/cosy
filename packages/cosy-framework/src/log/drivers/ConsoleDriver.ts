@@ -1,8 +1,4 @@
-import log, {
-  type LogLevel,
-  type LogMessage,
-  type Transport,
-} from 'electron-log';
+import log, { type LogMessage, type Transport } from 'electron-log';
 import chalk from 'chalk';
 import { sanitizeLogLevel } from './utils.js';
 import { ILogChannel } from '@/contract/logger/ILogChannel.js';
@@ -14,10 +10,8 @@ import { ILogLevel } from '@/contract/logger/ILogLevel.js';
 export class ConsoleChannel implements ILogChannel {
   private logger: any;
   private config: ILogChannelConfig;
-  private channelName: string;
 
-  constructor(name: string, config: ILogChannelConfig) {
-    this.channelName = name;
+  constructor(config: ILogChannelConfig) {
     this.config = config;
     this.logger = log.create({ logId: `console_${name}` });
     this.logger.transports.file.level = false; // Disable file output for console driver
@@ -125,6 +119,6 @@ export class ConsoleChannel implements ILogChannel {
 
 export class ConsoleDriver implements ILogDriver {
   createChannel(config: ILogChannelConfig): ILogChannel {
-    return new ConsoleChannel(config.name || 'default_console', config);
+    return new ConsoleChannel(config);
   }
 }
