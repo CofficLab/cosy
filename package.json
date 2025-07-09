@@ -11,6 +11,7 @@
     "build:framework": "pnpm --filter='@coffic/cosy-framework' build",
     "dev:deps": "pnpm --filter='@coffic/cosy-*' dev --parallel",
     "dev:all": "pnpm --filter='@coffic/cosy-*' dev --parallel",
+    "dev:example": "pnpm build:framework && pnpm --filter='@coffic/cosy-example' dev",
     "ext": "nodemon pipeline.mjs",
     "mcp": "pnpm --filter mcp-core test",
     "lint": "eslint",
