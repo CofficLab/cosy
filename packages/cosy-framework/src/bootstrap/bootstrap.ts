@@ -82,7 +82,7 @@ export function setupIPCHandlers(app: Application): void {
           data: result,
         };
       } catch (error) {
-        let message = error instanceof Error ? error.message : String(error);
+        const message = error instanceof Error ? error.message : String(error);
         // 返回错误响应而不是抛出错误，避免Electron输出错误堆栈
         return {
           success: false,

@@ -1,4 +1,4 @@
-import { ISettingManager } from '../contract/setting/ISettingManager';
+import { ISettingManager } from '../contract/setting/ISettingManager.js';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import { EMOJI } from '../constants.js';

@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import boxen from 'boxen';
-import { configureDbCommand } from './commands/db-commander.js';
+import { configureDbCommand } from '../commands/db-commander.js';
 import { ILogManager } from '@/contract/logger/ILogManager.js';
 
 /**

@@ -6,7 +6,7 @@
 import {
   IValidationRule,
   IValidationRules,
-} from '../contract/router/IValidation';
+} from '../contract/router/IValidation.js';
 
 export interface ValidationResult {
   valid: boolean;

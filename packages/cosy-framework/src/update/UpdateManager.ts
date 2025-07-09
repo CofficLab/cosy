@@ -138,7 +138,7 @@ export class UpdateManager implements IUpdateManager {
   public async checkForUpdates(): Promise<string> {
     this.logger.channel('updater').info('Manually checking for updates...');
 
-    let result = await autoUpdater.checkForUpdates();
+    const result = await autoUpdater.checkForUpdates();
     if (result) {
       return result.updateInfo.version;
     }

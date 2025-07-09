@@ -1,4 +1,4 @@
-import { CommanderApp } from '@/cli/commander-app.js';
+import { CommanderApp } from '@/application/Commander.js';
 
 /**
  * 创建命令行应用程序
