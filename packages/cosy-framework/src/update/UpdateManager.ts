@@ -19,7 +19,7 @@ export class UpdateManager implements IUpdateManager {
     const updaterConfig = this.updaterConfig ?? {
       allowDowngrade: true,
       allowPrerelease: true,
-      forceDevUpdateConfig: true,
+      forceDevUpdateConfig: false,
       autoCheck: true,
       autoCheckDelay: 3000,
     };
