@@ -3,8 +3,7 @@ import { EMOJI } from '../../constants.js';
 import { is } from '@electron-toolkit/utils';
 import { join } from 'path';
 import { Application, ILogManager } from '@coffic/cosy-framework';
-import { IWindowConfig } from './IWindowConfig.js';
-import { IWindowManager } from '../../../../../cosy-framework/src/contract/IWindowManager.js';
+import { IWindowManager, IWindowConfig } from '@coffic/cosy-framework';
 
 /**
  * 窗口管理器

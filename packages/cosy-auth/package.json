@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^37.1.0"
+    "electron": "^37.2.1"
   },
   "peerDependencies": {
     "@coffic/cosy-framework": "workspace:*"

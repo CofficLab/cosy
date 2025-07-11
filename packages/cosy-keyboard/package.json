@@ -16,11 +16,11 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@coffic/key-listener": "^1.0.3",
+    "@coffic/key-listener": "^1.0.4",
     "@electron-toolkit/utils": "^4.0.0"
   },
   "devDependencies": {
-    "electron": "^37.1.0",
+    "electron": "^37.2.1",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {

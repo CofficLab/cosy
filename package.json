@@ -9,6 +9,7 @@
     "build:rate-limit": "pnpm --filter='@coffic/cosy-rate-limit' build",
     "build:keyboard": "pnpm --filter='@coffic/cosy-keyboard' build",
     "build:framework": "pnpm --filter='@coffic/cosy-framework' build",
+    "build:example": "pnpm --filter='@coffic/cosy-example' build",
     "dev:deps": "pnpm --filter='@coffic/cosy-*' dev --parallel",
     "dev:all": "pnpm --filter='@coffic/cosy-*' dev --parallel",
     "dev:example": "pnpm build:framework && pnpm --filter='@coffic/cosy-example' dev",
