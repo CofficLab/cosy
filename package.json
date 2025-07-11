@@ -36,5 +36,8 @@
     "eslint-plugin-import": "^2.32.0",
     "globals": "^16.3.0",
     "typescript-eslint": "^8.36.0"
+  },
+  "dependencies": {
+    "@coffic/cosy-db-ui": "link:packages/cosy-db-ui"
   }
 }

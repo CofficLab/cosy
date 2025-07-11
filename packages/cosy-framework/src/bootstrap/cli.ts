@@ -33,5 +33,6 @@ export function createCliApp(
     name: config.name || 'cosy',
     description: config.description || 'Cosy Framework CLI',
     version: config.version || '0.1.0',
+    debug: config.debug || false,
   });
 }

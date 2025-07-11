@@ -60,3 +60,6 @@ export * from './constants.js';
 
 // Middleware
 export { LoggingMiddleware } from './log/LoggingMiddleware.js';
+
+// Extension
+export * from './extension/index.js';

@@ -15,6 +15,7 @@ async function main() {
       name: 'cosy',
       description: 'A Laravel-inspired TypeScript framework',
       version: '0.1.0',
+      debug: process.env.DEBUG === 'true' || process.argv.includes('--debug'),
     });
 
     // 添加全局选项

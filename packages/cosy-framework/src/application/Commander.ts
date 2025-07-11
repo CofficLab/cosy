@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import boxen from 'boxen';
 import { configureDbCommand } from '../commands/db-commander.js';
 import { ILogManager } from '@/contract/logger/ILogManager.js';
+import { ExtensionManager } from '../extension/ExtensionManager.js';
 
 /**
  * 基于 Commander.js 的 CLI 应用程序类
@@ -16,6 +17,7 @@ import { ILogManager } from '@/contract/logger/ILogManager.js';
 export class CommanderApp {
   private program: Command;
   private logger?: ILogManager;
+  private extensionManager?: ExtensionManager;
 
   /**
    * 创建 Commander 应用实例
@@ -28,10 +30,12 @@ export class CommanderApp {
       name?: string;
       description?: string;
       version?: string;
+      debug?: boolean;
     } = {}
   ) {
     this.logger = logger;
     this.program = new Command();
+    this.extensionManager = new ExtensionManager(config.debug || false);
 
     // 设置基本信息
     this.program
@@ -169,12 +173,32 @@ A Laravel-inspired TypeScript framework
   }
 
   /**
+   * 加载扩展命令
+   */
+  async loadExtensions(): Promise<void> {
+    if (this.extensionManager) {
+      try {
+        await this.extensionManager.loadAllExtensions();
+        await this.extensionManager.registerCommands(this.program);
+
+        this.logger?.debug('Extensions loaded and commands registered');
+      } catch (error) {
+        this.logger?.error('Failed to load extensions', { error });
+        console.error('⚠️ 加载扩展时发生错误:', error);
+      }
+    }
+  }
+
+  /**
    * 解析命令行参数并执行
    * @param argv 命令行参数
    */
   async parse(argv?: string[]): Promise<void> {
     try {
       this.logger?.debug('Parsing command line arguments', { argv });
+
+      // 首先加载扩展命令
+      await this.loadExtensions();
 
       // 获取参数数组，如果没有提供则使用 process.argv
       const args = argv || process.argv;
