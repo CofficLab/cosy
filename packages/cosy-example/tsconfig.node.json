@@ -7,8 +7,7 @@
         "src/preload/**/*",
         "src/types/**/*",
         "native/**/*",
-        "ui",
-        "../cosy-framework/src/contract/IWindowManager.ts"
+        "ui"
     ],
     "compilerOptions": {
         "composite": true,
