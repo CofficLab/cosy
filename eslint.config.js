@@ -18,6 +18,7 @@ export default defineConfig([
       '**/coverage/**/*',
       '**/logs/**/*',
       '**/temp/**/*',
+      '**/.astro/**/*',
     ],
     'Ignore Build Directory'
   ),
