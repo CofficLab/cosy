@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+/* 自定义样式 */
+.table-container {
+  @apply overflow-x-auto;
+}
+
+.sql-editor {
+  @apply font-mono text-sm;
+}
+
+.connection-status {
+  @apply badge badge-sm;
+}
+
+.connection-status.connected {
+  @apply badge-success;
+}
+
+.connection-status.disconnected {
+  @apply badge-error;
+}
+
+.connection-status.connecting {
+  @apply badge-warning;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-base-200;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-base-300 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-base-content/20;
+}

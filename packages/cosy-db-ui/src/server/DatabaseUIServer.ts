@@ -3,7 +3,7 @@ import { createServer, Server } from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import open from 'open';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -246,6 +246,318 @@ export class DatabaseUIServer {
         memory: process.memoryUsage(),
         timestamp: new Date().toISOString(),
       });
+    });
+
+    // 数据库连接
+    apiRouter.post('/connect', (req: Request, res: Response) => {
+      const connection = req.body;
+
+      // TODO: 实现真实的数据库连接
+      setTimeout(() => {
+        res.json({
+          success: true,
+          message: '连接成功',
+          connectionId: Date.now().toString(),
+          timestamp: new Date().toISOString(),
+        });
+      }, 1000);
+    });
+
+    // 断开连接
+    apiRouter.post('/disconnect', (req: Request, res: Response) => {
+      // TODO: 实现真实的数据库断开连接
+      res.json({
+        success: true,
+        message: '已断开连接',
+        timestamp: new Date().toISOString(),
+      });
+    });
+
+    // 获取表列表
+    apiRouter.get('/tables', (req: Request, res: Response) => {
+      // TODO: 实现真实的表列表获取
+      res.json([
+        {
+          name: 'users',
+          type: 'table',
+          rowCount: 150,
+          columns: [
+            {
+              name: 'id',
+              type: 'INTEGER',
+              nullable: false,
+              isPrimaryKey: true,
+              isAutoIncrement: true,
+            },
+            { name: 'name', type: 'VARCHAR(255)', nullable: false },
+            { name: 'email', type: 'VARCHAR(255)', nullable: false },
+            {
+              name: 'created_at',
+              type: 'TIMESTAMP',
+              nullable: false,
+              defaultValue: 'CURRENT_TIMESTAMP',
+            },
+          ],
+          indexes: [
+            { name: 'PRIMARY', columns: ['id'], unique: true, type: 'primary' },
+            {
+              name: 'idx_email',
+              columns: ['email'],
+              unique: true,
+              type: 'unique',
+            },
+          ],
+          foreignKeys: [],
+        },
+        {
+          name: 'posts',
+          type: 'table',
+          rowCount: 89,
+          columns: [
+            {
+              name: 'id',
+              type: 'INTEGER',
+              nullable: false,
+              isPrimaryKey: true,
+              isAutoIncrement: true,
+            },
+            { name: 'title', type: 'VARCHAR(255)', nullable: false },
+            { name: 'content', type: 'TEXT', nullable: true },
+            { name: 'user_id', type: 'INTEGER', nullable: false },
+            {
+              name: 'created_at',
+              type: 'TIMESTAMP',
+              nullable: false,
+              defaultValue: 'CURRENT_TIMESTAMP',
+            },
+          ],
+          indexes: [
+            { name: 'PRIMARY', columns: ['id'], unique: true, type: 'primary' },
+            {
+              name: 'idx_user_id',
+              columns: ['user_id'],
+              unique: false,
+              type: 'index',
+            },
+          ],
+          foreignKeys: [
+            {
+              name: 'fk_posts_user_id',
+              column: 'user_id',
+              referencedTable: 'users',
+              referencedColumn: 'id',
+            },
+          ],
+        },
+      ]);
+    });
+
+    // 获取表数据
+    apiRouter.get('/tables/:tableName/data', (req: Request, res: Response) => {
+      const { tableName } = req.params;
+      // const { page = 1, pageSize = 50 } = req.query; // TODO: 实现分页功能
+
+      // TODO: 实现真实的表数据获取
+      const mockData =
+        tableName === 'users'
+          ? [
+              {
+                id: 1,
+                name: 'John Doe',
+                email: 'john@example.com',
+                created_at: '2023-01-15T10:30:00Z',
+              },
+              {
+                id: 2,
+                name: 'Jane Smith',
+                email: 'jane@example.com',
+                created_at: '2023-01-16T14:20:00Z',
+              },
+              {
+                id: 3,
+                name: 'Bob Johnson',
+                email: 'bob@example.com',
+                created_at: '2023-01-17T09:15:00Z',
+              },
+            ]
+          : [
+              {
+                id: 1,
+                title: 'First Post',
+                content: 'This is the first post',
+                user_id: 1,
+                created_at: '2023-01-15T10:30:00Z',
+              },
+              {
+                id: 2,
+                title: 'Second Post',
+                content: 'This is the second post',
+                user_id: 2,
+                created_at: '2023-01-16T14:20:00Z',
+              },
+            ];
+
+      res.json(mockData);
+    });
+
+    // 获取表结构
+    apiRouter.get(
+      '/tables/:tableName/structure',
+      (req: Request, res: Response) => {
+        const { tableName } = req.params;
+
+        // TODO: 实现真实的表结构获取
+        const mockStructure = {
+          name: tableName,
+          type: 'table',
+          columns: [
+            {
+              name: 'id',
+              type: 'INTEGER',
+              nullable: false,
+              isPrimaryKey: true,
+              isAutoIncrement: true,
+            },
+            { name: 'name', type: 'VARCHAR(255)', nullable: false },
+            { name: 'email', type: 'VARCHAR(255)', nullable: false },
+            {
+              name: 'created_at',
+              type: 'TIMESTAMP',
+              nullable: false,
+              defaultValue: 'CURRENT_TIMESTAMP',
+            },
+          ],
+          indexes: [
+            { name: 'PRIMARY', columns: ['id'], unique: true, type: 'primary' },
+          ],
+          foreignKeys: [],
+        };
+
+        res.json(mockStructure);
+      }
+    );
+
+    // 执行SQL查询
+    apiRouter.post('/execute', (req: Request, res: Response) => {
+      const { sql } = req.body;
+
+      if (!sql || typeof sql !== 'string') {
+        return res.status(400).json({
+          error: 'Bad Request',
+          message: 'SQL查询不能为空',
+        });
+      }
+
+      // TODO: 实现真实的SQL查询执行
+      setTimeout(() => {
+        res.json({
+          rows: [
+            { id: 1, name: 'Sample Result', count: 42 },
+            { id: 2, name: 'Another Row', count: 24 },
+          ],
+          rowCount: 2,
+          columns: ['id', 'name', 'count'],
+          executionTime: Math.random() * 100,
+        });
+      }, 200);
+    });
+
+    // 插入记录
+    apiRouter.post(
+      '/tables/:tableName/records',
+      (req: Request, res: Response) => {
+        const { tableName } = req.params;
+        const record = req.body;
+
+        // TODO: 实现真实的记录插入
+        res.json({
+          success: true,
+          message: '记录插入成功',
+          insertId: Date.now(),
+          timestamp: new Date().toISOString(),
+        });
+      }
+    );
+
+    // 更新记录
+    apiRouter.put(
+      '/tables/:tableName/records',
+      (req: Request, res: Response) => {
+        const { tableName } = req.params;
+        // const { record, where } = req.body; // TODO: 实现记录更新逻辑
+
+        // TODO: 实现真实的记录更新
+        res.json({
+          success: true,
+          message: '记录更新成功',
+          affectedRows: 1,
+          timestamp: new Date().toISOString(),
+        });
+      }
+    );
+
+    // 删除记录
+    apiRouter.delete(
+      '/tables/:tableName/records',
+      (req: Request, res: Response) => {
+        const { tableName } = req.params;
+        const { where } = req.body;
+
+        // TODO: 实现真实的记录删除
+        res.json({
+          success: true,
+          message: '记录删除成功',
+          affectedRows: 1,
+          timestamp: new Date().toISOString(),
+        });
+      }
+    );
+
+    // 获取数据库信息
+    apiRouter.get('/info', (req: Request, res: Response) => {
+      // TODO: 实现真实的数据库信息获取
+      res.json({
+        name: 'example_db',
+        type: 'SQLite',
+        version: '3.39.4',
+        size: 2048576,
+        tables: 5,
+        views: 2,
+        indexes: 8,
+        lastBackup: null,
+      });
+    });
+
+    // 导出数据
+    apiRouter.post('/export', (req: Request, res: Response) => {
+      const { format, tables } = req.body;
+
+      // TODO: 实现真实的数据导出
+      let content = '';
+      let contentType = 'text/plain';
+
+      switch (format) {
+        case 'sql':
+          content =
+            '-- SQL Export\nCREATE TABLE users (\n  id INTEGER PRIMARY KEY,\n  name VARCHAR(255)\n);';
+          contentType = 'text/sql';
+          break;
+        case 'json':
+          content = JSON.stringify([{ id: 1, name: 'Sample' }], null, 2);
+          contentType = 'application/json';
+          break;
+        case 'csv':
+          content = 'id,name\n1,Sample';
+          contentType = 'text/csv';
+          break;
+      }
+
+      res.setHeader('Content-Type', contentType);
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename="export.${format}"`
+      );
+      res.send(content);
     });
 
     // 数据库连接测试
@@ -514,6 +826,17 @@ export class DatabaseUIServer {
   private getIndexHtml(): string {
     const { host, port } = this.config;
 
+    // 检查是否有构建好的 Vue 应用
+    const staticPath = join(__dirname, '../dist');
+    if (existsSync(join(staticPath, 'index.html'))) {
+      // 如果有构建好的应用，直接返回
+      let html = readFileSync(join(staticPath, 'index.html'), 'utf-8');
+      // 替换基础路径
+      html = html.replace('<base href="/">', `<base href="/">`);
+      return html;
+    }
+
+    // 否则返回开发页面
     return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
