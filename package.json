@@ -10,6 +10,7 @@
     "build:keyboard": "pnpm --filter='@coffic/cosy-keyboard' build",
     "build:framework": "pnpm --filter='@coffic/cosy-framework' build",
     "build:example": "pnpm --filter='@coffic/cosy-example' build",
+    "build:datahub": "pnpm --filter='@coffic/cosy-datahub' build",
     "dev:deps": "pnpm --filter='@coffic/cosy-*' dev --parallel",
     "dev:all": "pnpm --filter='@coffic/cosy-*' dev --parallel",
     "dev:example": "pnpm build:framework && pnpm --filter='@coffic/cosy-example' dev",
@@ -38,6 +39,6 @@
     "typescript-eslint": "^8.36.0"
   },
   "dependencies": {
-    "@coffic/cosy-db-ui": "link:packages/cosy-db-ui"
+    "better-sqlite3": "^11.10.0"
   }
 }

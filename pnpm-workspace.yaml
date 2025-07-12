@@ -1,5 +1,13 @@
 packages:
-  - 'packages/*'
+  - packages/*
+
+ignoredBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - better-sqlite3
+  - electron-winstaller
+  - esbuild
+  - sharp
+  - unrs-resolver
 
 onlyBuiltDependencies:
   - electron
