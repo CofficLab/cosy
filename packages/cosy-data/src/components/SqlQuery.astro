@@ -1,0 +1,119 @@
+---
+// SqlQuery.astro - SQL查询组件
+interface QueryResult {
+  rows: Record<string, any>[];
+  columns: string[];
+  rowCount: number;
+  executionTime: number;
+}
+---
+
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+  <h2 class="text-xl font-semibold mb-4">SQL 查询</h2>
+  <div class="mb-4">
+    <textarea
+      id="sqlQuery"
+      placeholder="输入 SQL 查询语句..."
+      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      rows="4"
+    ></textarea>
+  </div>
+  <button
+    id="executeQuery"
+    class="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+  >
+    执行查询
+  </button>
+  <div id="queryResult" class="mt-4"></div>
+</div>
+
+<script>
+  const sqlQuery = document.getElementById('sqlQuery') as HTMLTextAreaElement;
+  const executeQueryBtn = document.getElementById('executeQuery') as HTMLButtonElement;
+  const queryResult = document.getElementById('queryResult');
+
+  let isConnected = false;
+
+  // 显示查询结果
+  function displayQueryResult(data: any) {
+    if (!queryResult) return;
+
+    if (data.rows.length === 0) {
+      queryResult.innerHTML = `
+        <div class="p-4 bg-gray-50 rounded-md">
+          <p class="text-gray-600">查询执行成功，但没有返回数据</p>
+          <p class="text-sm text-gray-500">执行时间: ${data.executionTime}ms</p>
+        </div>
+      `;
+      return;
+    }
+
+    queryResult.innerHTML = `
+      <div class="mb-3">
+        <p class="text-sm text-gray-600">返回 ${data.rowCount} 行，执行时间: ${data.executionTime}ms</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-50">
+              ${data.columns.map((col: any) => `<th class="border border-gray-300 px-4 py-2 text-left">${col}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${data.rows.map((row: any) => `
+              <tr class="hover:bg-gray-50">
+                ${data.columns.map((col: any) => `<td class="border border-gray-300 px-4 py-2">${row[col] || ''}</td>`).join('')}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  // 执行 SQL 查询
+  executeQueryBtn?.addEventListener('click', async () => {
+    const query = sqlQuery?.value.trim();
+    if (!query) {
+      if (queryResult) {
+        queryResult.innerHTML = '<p class="text-red-600">请输入 SQL 查询语句</p>';
+      }
+      return;
+    }
+
+    if (!isConnected) {
+      if (queryResult) {
+        queryResult.innerHTML = '<p class="text-red-600">请先连接数据库</p>';
+      }
+      return;
+    }
+
+    try {
+      executeQueryBtn.disabled = true;
+      executeQueryBtn.textContent = '执行中...';
+
+      const { actions } = await import('astro:actions');
+      const result = await actions.executeQuery({ sql: query });
+
+      if (result.data?.success) {
+        displayQueryResult(result.data.data);
+      } else {
+        if (queryResult) {
+          queryResult.innerHTML = `<p class="text-red-600">查询失败: ${result.data?.error}</p>`;
+        }
+      }
+    } catch (error) {
+      if (queryResult) {
+        queryResult.innerHTML = `<p class="text-red-600">查询失败: ${(error as Error).message}</p>`;
+      }
+    } finally {
+      executeQueryBtn.disabled = false;
+      executeQueryBtn.textContent = '执行查询';
+    }
+  });
+
+  // 监听数据库连接状态
+  window.addEventListener('database-connected', () => {
+    isConnected = true;
+  });
+</script>

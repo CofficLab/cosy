@@ -1,0 +1,72 @@
+---
+// TableData.astro - 表数据显示组件
+interface TableDataResult {
+  data: Record<string, any>[];
+  total: number;
+}
+---
+
+<div id="tableDataSection" class="bg-white rounded-lg shadow-md p-6 hidden">
+  <h2 class="text-xl font-semibold mb-4">表数据</h2>
+  <div id="tableData" class="overflow-x-auto">
+    <!-- 表格内容将在这里动态生成 -->
+  </div>
+</div>
+
+<script>
+  const tableDataSection = document.getElementById('tableDataSection');
+  const tableData = document.getElementById('tableData');
+
+  // 显示表数据
+  function displayTableData(tableName: string, data: any) {
+    if (!tableData) return;
+
+    if (data.data.length === 0) {
+      tableData.innerHTML = `<p class="text-gray-500">表 "${tableName}" 中没有数据</p>`;
+      return;
+    }
+
+    const columns = Object.keys(data.data[0]);
+
+    tableData.innerHTML = `
+      <h3 class="font-medium mb-3">表: ${tableName} (${data.total} 行)</h3>
+      <table class="min-w-full table-auto border-collapse">
+        <thead>
+          <tr class="bg-gray-50">
+            ${columns.map(col => `<th class="border border-gray-300 px-4 py-2 text-left">${col}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${data.data.map((row: any) => `
+            <tr class="hover:bg-gray-50">
+              ${columns.map((col: any) => `<td class="border border-gray-300 px-4 py-2">${row[col] || ''}</td>`).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // 查看表数据
+  async function viewTable(tableName: string) {
+    try {
+      const { actions } = await import('astro:actions');
+      const result = await actions.getTableData({ tableName });
+
+      if (result.data?.success) {
+        displayTableData(tableName, result.data.data);
+        tableDataSection?.classList.remove('hidden');
+      } else {
+        console.error('加载表数据失败:', result.data?.error);
+      }
+    } catch (error) {
+      console.error('加载表数据失败:', (error as Error).message);
+    }
+  }
+
+  // 监听查看表数据事件
+  window.addEventListener('view-table', (event: any) => {
+    const { tableName } = event.detail;
+    viewTable(tableName);
+  });
+</script>

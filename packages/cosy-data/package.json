@@ -1,0 +1,60 @@
+{
+  "name": "@coffic/cosy-datahub",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Database UI extension for Cosy Framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "pnpm build:extension && pnpm build:web && pnpm build:copy",
+    "build:extension": "tsc --project tsconfig.extension.json",
+    "build:web": "astro build",
+    "build:copy": "cp -r dist-extension/extension/* dist/",
+    "preview": "astro preview",
+    "astro": "astro",
+    "clean": "rimraf dist dist-extension .astro"
+  },
+  "cosy": {
+    "type": "command",
+    "commands": [
+      {
+        "name": "ui",
+        "description": "Launch database UI in browser (Astro version)",
+        "configure": "dist/commands/ui-command.js"
+      }
+    ]
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.3.0",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/better-sqlite3": "^7.6.13",
+    "astro": "^5.11.0",
+    "better-sqlite3": "^11.10.0",
+    "commander": "^14.0.0",
+    "drizzle-orm": "^0.44.2",
+    "tailwindcss": "^4.1.11"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [
+    "cosy-extension",
+    "cosy-framework",
+    "cosy",
+    "database",
+    "ui",
+    "sqlite",
+    "astro",
+    "tailwind"
+  ],
+  "author": "Coffic Team",
+  "license": "MIT",
+  "files": [
+    "dist",
+    ".astro",
+    "README.md"
+  ]
+}

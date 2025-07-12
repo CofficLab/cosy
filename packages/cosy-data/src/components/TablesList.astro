@@ -1,0 +1,75 @@
+---
+// TablesList.astro - 数据表列表组件
+interface TableInfo {
+  name: string;
+  rowCount: number;
+  columns: Array<{ name: string; type: string }>;
+}
+---
+
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+  <h2 class="text-xl font-semibold mb-4">数据表</h2>
+  <div id="tablesList" class="space-y-2">
+    <p class="text-gray-500">请先连接数据库</p>
+  </div>
+</div>
+
+<script>
+  import type { ITableInfo } from '../types/database';
+
+  const tablesList = document.getElementById('tablesList');
+
+  // 显示表列表
+  function displayTables(tables: ITableInfo[]) {
+    if (!tablesList) return;
+
+    if (tables.length === 0) {
+      tablesList.innerHTML = '<p class="text-gray-500">数据库中没有表</p>';
+      return;
+    }
+
+    tablesList.innerHTML = tables.map(table => `
+      <div class="flex items-center justify-between p-3 border border-gray-200 rounded-md hover:bg-gray-50">
+        <div>
+          <h3 class="font-medium">${table.name}</h3>
+          <p class="text-sm text-gray-600">${table.rowCount} 行, ${table.columns.length} 列</p>
+        </div>
+        <button
+          onclick="viewTable('${table.name}')"
+          class="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          查看数据
+        </button>
+      </div>
+    `).join('');
+  }
+
+  // 加载表列表
+  async function loadTables() {
+    try {
+      const { actions } = await import('astro:actions');
+      const result = await actions.getTables({});
+
+      if (result.data?.success) {
+        displayTables(result.data.data);
+      } else {
+        console.error('加载表列表失败:', result.data?.error);
+      }
+    } catch (error) {
+      console.error('加载表列表失败:', (error as Error).message);
+    }
+  }
+
+  // 监听数据库连接事件
+  window.addEventListener('database-connected', () => {
+    loadTables();
+  });
+
+  // 全局函数，供按钮点击使用
+  (window as any).viewTable = async (tableName: string) => {
+    // 触发自定义事件，让 TableData 组件处理
+    window.dispatchEvent(new CustomEvent('view-table', {
+      detail: { tableName }
+    }));
+  };
+</script>

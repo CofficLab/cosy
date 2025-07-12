@@ -1,0 +1,24 @@
+---
+import '../styles/global.css';
+import {
+  Layout,
+  ConnectionConfig,
+  TablesList,
+  TableData,
+  SqlQuery
+} from '../components/index.ts';
+---
+
+<Layout title="SQLite 数据库管理工具">
+	<!-- 连接配置组件 -->
+	<ConnectionConfig />
+
+	<!-- 表列表组件 -->
+	<TablesList />
+
+	<!-- 表数据组件 -->
+	<TableData />
+
+	<!-- SQL 查询组件 -->
+	<SqlQuery />
+</Layout>
