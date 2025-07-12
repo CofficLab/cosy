@@ -25,7 +25,7 @@ export default function configureUICommand(program: Command): void {
 
   dbCommand
     .command('ui')
-    .description('Launch database UI in browser (Astro version)')
+    .description('Launch database UI in browser')
     .option('-p, --port <port>', 'Port to run the server on', '4321')
     .option('-H, --host <host>', 'Host to bind the server to', 'localhost')
     .option('--dev', 'Run in development mode', false)
@@ -45,7 +45,7 @@ export default function configureUICommand(program: Command): void {
    • 表数据的查看和编辑
    • SQL查询执行
    • 数据库结构查看
-   • 现代化的Web界面 (Astro + Tailwind CSS)
+   • 现代化的Web界面
 
 🎯 用途:
    • 开发环境数据库管理
@@ -67,7 +67,7 @@ export default function configureUICommand(program: Command): void {
     .action(async (options) => {
       const { port, host, dev, open } = options;
 
-      console.log(`🚀 正在启动 Cosy Database UI (Astro版本)...`);
+      console.log(`🚀 正在启动 Cosy Database UI...`);
       console.log(`📍 服务器地址: http://${host}:${port}`);
       console.log(`🔧 运行模式: ${dev ? '开发模式' : '生产模式'}`);
 
