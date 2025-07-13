@@ -1,5 +1,7 @@
 ---
 // SqlQuery.astro - SQL查询组件
+import { showStatus } from '../scripts/utils';
+
 interface QueryResult {
   rows: Record<string, any>[];
   columns: string[];
@@ -8,24 +10,36 @@ interface QueryResult {
 }
 ---
 
-<div class="bg-white rounded-lg shadow-md p-6 mb-6">
-  <h2 class="text-xl font-semibold mb-4">SQL 查询</h2>
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+  <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">SQL 查询</h2>
   <div class="mb-4">
+    <label for="sqlQuery" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      输入 SQL
+    </label>
     <textarea
       id="sqlQuery"
-      placeholder="输入 SQL 查询语句..."
-      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       rows="4"
+      class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+      placeholder="例如: SELECT * FROM users LIMIT 10;"
     ></textarea>
   </div>
-  <button
-    id="executeQuery"
-    class="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
-  >
-    执行查询
-  </button>
-  <div id="queryResult" class="mt-4"></div>
+  <div class="flex justify-end gap-4">
+    <button
+      id="clearQuery"
+      class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-500"
+    >
+      清空
+    </button>
+    <button
+      id="executeQuery"
+      class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      执行查询
+    </button>
+  </div>
 </div>
+
+<div id="queryResultWrapper"></div>
 
 <script>
   const sqlQuery = document.getElementById('sqlQuery') as HTMLTextAreaElement;
