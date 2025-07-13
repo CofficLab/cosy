@@ -1,0 +1,120 @@
+---
+// packages/cosy-data-hub/src/components/FileExplorer.astro
+---
+<div id="file-explorer" class="bg-gray-50 border rounded-lg p-4 h-96 overflow-y-auto text-sm">
+  <ul id="file-list-root">
+    <!-- File and directory items will be rendered here -->
+  </ul>
+</div>
+
+<style>
+  .file-entry {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+  }
+  .file-entry:hover {
+    background-color: #e5e7eb; /* bg-gray-200 */
+  }
+  .file-entry .icon {
+    width: 1.5rem;
+  }
+</style>
+
+<script>
+  interface DirEntry {
+    name: string;
+    path: string;
+    isDirectory: boolean;
+  }
+
+  // Root element for the file explorer
+  const fileExplorerRoot = document.getElementById('file-list-root');
+
+  /**
+   * Fetches directory content and renders it.
+   * @param {string} path - The directory path to fetch.
+   * @param {HTMLElement} elementToAppend - The UL element to append children to.
+   */
+  async function fetchAndRenderTree(path = '.', elementToAppend: HTMLElement) {
+    try {
+      // Show loading state
+      elementToAppend.innerHTML = '<li>Loading...</li>';
+
+      const response = await fetch(`/api/browse?path=${encodeURIComponent(path)}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch directory content: ${response.statusText}`);
+      }
+      const data: { success: boolean, tree: DirEntry[], error?: string } = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Unknown error');
+      }
+
+      const { tree } = data;
+      elementToAppend.innerHTML = ''; // Clear loading/previous content
+
+      if (tree.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'Empty directory';
+        li.className = 'text-gray-500 pl-8';
+        elementToAppend.appendChild(li);
+        return;
+      }
+
+      tree.forEach((entry: DirEntry) => {
+        const li = document.createElement('li');
+        li.className = 'file-entry';
+        li.dataset.path = entry.path;
+
+        const icon = document.createElement('span');
+        icon.className = 'icon';
+        icon.textContent = entry.isDirectory ? '📁' : '📄';
+        li.appendChild(icon);
+
+        const name = document.createElement('span');
+        name.textContent = entry.name;
+        li.appendChild(name);
+
+        if (entry.isDirectory) {
+          li.dataset.type = 'dir';
+          li.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const childUl = li.querySelector('ul');
+            if (childUl) {
+              // Collapse
+              childUl.remove();
+            } else {
+              // Expand
+              const newUl = document.createElement('ul');
+              newUl.className = 'pl-6';
+              li.appendChild(newUl);
+              fetchAndRenderTree(entry.path, newUl);
+            }
+          });
+        } else {
+          li.dataset.type = 'file';
+          li.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Dispatch event with the selected file path for .db files
+            if (entry.name.endsWith('.db')) {
+              window.dispatchEvent(new CustomEvent('file-selected', { detail: { path: entry.path } }));
+            }
+          });
+        }
+        elementToAppend.appendChild(li);
+      });
+    } catch (error) {
+      console.error('Error loading file tree:', error);
+      elementToAppend.innerHTML = `<li>Error: ${(error as Error).message}</li>`;
+    }
+  }
+
+  // Initial load
+  if (fileExplorerRoot) {
+    fetchAndRenderTree('.', fileExplorerRoot);
+  }
+</script>
