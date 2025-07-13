@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@astrojs/node": "^9.3.0",
+    "@coffic/cosy-ui": "^0.9.1",
     "@tailwindcss/vite": "^4.1.11",
     "@types/better-sqlite3": "^7.6.13",
     "astro": "^5.11.0",
@@ -36,7 +37,7 @@
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "@types/node": "^22.10.5",
+    "@types/node": "^22.16.3",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   },
