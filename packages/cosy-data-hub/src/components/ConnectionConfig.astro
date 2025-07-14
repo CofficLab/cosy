@@ -5,12 +5,10 @@ import BrowseButton from './BrowseButton.astro';
 import ConnectButton from './ConnectButton.astro';
 import CreateTestDbButton from './CreateTestDbButton.astro';
 import TestConnectionButton from './TestConnectionButton.astro';
+import { Card } from '@coffic/cosy-ui';
 ---
 
-<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-        数据库连接
-    </h2>
+<Card title="数据库连接">
     <div class="flex gap-4 items-end">
         <div class="flex-1">
             <label
@@ -33,7 +31,7 @@ import TestConnectionButton from './TestConnectionButton.astro';
         <ConnectButton />
     </div>
     <div id="connectionStatus" class="mt-4 text-sm"></div>
-</div>
+</Card>
 
 <div id="fileExplorerWrapper" class="hidden mt-4">
     <FileExplorer />
