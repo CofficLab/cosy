@@ -1,0 +1,47 @@
+---
+import { Button } from '@coffic/cosy-ui';
+---
+
+<Button id="connect">连接</Button>
+
+<script>
+    import { actions } from 'astro:actions';
+    import { showStatus } from '../../scripts/utils.ts';
+
+    const connectBtn = document.getElementById('connect') as HTMLButtonElement;
+    const dbPathInput = document.getElementById('dbPath') as HTMLInputElement;
+
+    connectBtn?.addEventListener('click', async () => {
+        const filename = dbPathInput?.value.trim();
+        if (!filename) {
+            showStatus('请输入数据库文件路径', 'error');
+            return;
+        }
+
+        try {
+            connectBtn.disabled = true;
+            connectBtn.textContent = '连接中...';
+
+            const result = await actions.connectToDatabase({
+                type: 'sqlite',
+                filename,
+            });
+
+            if (result.data?.success) {
+                showStatus('数据库连接成功！', 'success');
+                // 触发自定义事件通知其他组件
+                window.dispatchEvent(new CustomEvent('database-connected'));
+            } else {
+                showStatus(
+                    `连接失败: ${result.data?.error || '未知错误'}`,
+                    'error'
+                );
+            }
+        } catch (error) {
+            showStatus(`连接失败: ${(error as Error).message}`, 'error');
+        } finally {
+            connectBtn.disabled = false;
+            connectBtn.textContent = '连接';
+        }
+    });
+</script>

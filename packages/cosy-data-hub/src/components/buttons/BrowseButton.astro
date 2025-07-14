@@ -1,0 +1,16 @@
+---
+import { Button } from '@coffic/cosy-ui';
+---
+
+<Button id="browseBtn"> 浏览... </Button>
+
+<script>
+    const browseBtn = document.getElementById('browseBtn') as HTMLButtonElement;
+    const fileExplorerWrapper = document.getElementById(
+        'fileExplorerWrapper'
+    ) as HTMLDivElement;
+
+    browseBtn?.addEventListener('click', () => {
+        fileExplorerWrapper.classList.toggle('hidden');
+    });
+</script>

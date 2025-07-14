@@ -1,23 +1,21 @@
 ---
+import ConnectionConfig from '../components/ConnectionConfig.astro';
+import SqlQuery from '../components/SqlQuery.astro';
+import TableData from '../components/TableData.astro';
+import TablesList from '../components/TablesList.astro';
 import Layout from '../layout.astro';
-import {
-  ConnectionConfig,
-  TablesList,
-  TableData,
-  SqlQuery
-} from '../components/index.ts';
 ---
 
 <Layout title="SQLite 数据库管理工具">
-	<!-- 连接配置组件 -->
-	<ConnectionConfig />
+    <!-- 连接配置组件 -->
+    <ConnectionConfig />
 
-	<!-- 表列表组件 -->
-	<TablesList />
+    <!-- 表列表组件 -->
+    <TablesList />
 
-	<!-- 表数据组件 -->
-	<TableData />
+    <!-- 表数据组件 -->
+    <TableData />
 
-	<!-- SQL 查询组件 -->
-	<SqlQuery />
+    <!-- SQL 查询组件 -->
+    <SqlQuery />
 </Layout>

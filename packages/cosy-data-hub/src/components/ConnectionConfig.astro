@@ -1,139 +1,57 @@
 ---
 // ConnectionConfig.astro - 数据库连接配置组件
 import FileExplorer from './FileExplorer.astro';
+import BrowseButton from './buttons/BrowseButton.astro';
+import ConnectButton from './buttons/ConnectButton.astro';
+import CreateTestDbButton from './buttons/CreateTestDbButton.astro';
+import TestConnectionButton from './buttons/TestConnectionButton.astro';
 ---
 
 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-  <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">数据库连接</h2>
-  <div class="flex gap-4 items-end">
-    <div class="flex-1">
-      <label for="dbPath" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-        数据库文件路径
-      </label>
-      <div class="flex gap-2">
-        <input
-          type="text"
-          id="dbPath"
-          placeholder="点击右侧"浏览"按钮选择文件"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          id="browseBtn"
-          class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-500 whitespace-nowrap"
-        >
-          浏览...
-        </button>
-      </div>
+    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+        数据库连接
+    </h2>
+    <div class="flex gap-4 items-end">
+        <div class="flex-1">
+            <label
+                for="dbPath"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                数据库文件路径
+            </label>
+            <div class="flex gap-2">
+                <input
+                    type="text"
+                    id="dbPath"
+                    placeholder="点击右侧`浏览`按钮选择文件"
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <BrowseButton />
+            </div>
+        </div>
+        <CreateTestDbButton />
+        <TestConnectionButton />
+        <ConnectButton />
     </div>
-    <button
-      id="testConnection"
-      class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300 dark:disabled:bg-blue-800"
-    >
-      测试连接
-    </button>
-    <button
-      id="connect"
-      class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-green-300 dark:disabled:bg-green-800"
-    >
-      连接
-    </button>
-  </div>
-  <div id="connectionStatus" class="mt-4 text-sm"></div>
+    <div id="connectionStatus" class="mt-4 text-sm"></div>
 </div>
 
 <div id="fileExplorerWrapper" class="hidden mt-4">
-  <FileExplorer />
+    <FileExplorer />
 </div>
 
 <script>
-  import { actions } from 'astro:actions';
-  import { showStatus } from '../scripts/utils.ts';
+    // DOM 元素
+    const dbPathInput = document.getElementById('dbPath') as HTMLInputElement;
+    const fileExplorerWrapper = document.getElementById(
+        'fileExplorerWrapper'
+    ) as HTMLDivElement;
 
-  // DOM 元素
-  const dbPathInput = document.getElementById('dbPath') as HTMLInputElement;
-  const testConnectionBtn = document.getElementById('testConnection') as HTMLButtonElement;
-  const connectBtn = document.getElementById('connect') as HTMLButtonElement;
-  const browseBtn = document.getElementById('browseBtn') as HTMLButtonElement;
-  const fileExplorerWrapper = document.getElementById('fileExplorerWrapper') as HTMLDivElement;
-
-  // 浏览按钮事件
-  browseBtn?.addEventListener('click', () => {
-    fileExplorerWrapper.classList.toggle('hidden');
-  });
-
-  // 监听文件选择事件
-  window.addEventListener('file-selected', (e: Event) => {
-    const event = e as CustomEvent;
-    if (dbPathInput && event.detail.path) {
-      dbPathInput.value = event.detail.path;
-      fileExplorerWrapper.classList.add('hidden'); // 选择后自动隐藏
-    }
-  });
-
-  // 测试连接
-  testConnectionBtn?.addEventListener('click', async () => {
-    const filename = dbPathInput?.value.trim();
-    if (!filename) {
-      showStatus('请输入数据库文件路径', 'error');
-      return;
-    }
-
-    try {
-      testConnectionBtn.disabled = true;
-      testConnectionBtn.textContent = '测试中...';
-
-      const result = await actions.testConnection({
-        type: 'sqlite',
-        filename
-      });
-
-      if (result.data?.success && result.data?.connected) {
-        showStatus('连接测试成功！', 'success');
-      } else {
-        showStatus(`连接测试失败: ${result.data?.error || '未知错误'}`, 'error');
-      }
-    } catch (error) {
-      showStatus(`连接测试失败: ${(error as Error).message}`, 'error');
-    } finally {
-      testConnectionBtn.disabled = false;
-      testConnectionBtn.textContent = '测试连接';
-    }
-  });
-
-  // 连接数据库
-  connectBtn?.addEventListener('click', async () => {
-    const filename = dbPathInput?.value.trim();
-    if (!filename) {
-      showStatus('请输入数据库文件路径', 'error');
-      return;
-    }
-
-    try {
-      connectBtn.disabled = true;
-      connectBtn.textContent = '连接中...';
-
-      const result = await actions.connectToDatabase({
-        type: 'sqlite',
-        filename
-      });
-
-      if (result.data?.success) {
-        showStatus('数据库连接成功！', 'success');
-        // 触发自定义事件通知其他组件
-        window.dispatchEvent(new CustomEvent('database-connected'));
-      } else {
-        showStatus(`连接失败: ${result.data?.error || '未知错误'}`, 'error');
-      }
-    } catch (error) {
-      showStatus(`连接失败: ${(error as Error).message}`, 'error');
-    } finally {
-      connectBtn.disabled = false;
-      connectBtn.textContent = '连接';
-    }
-  });
-
-  // 设置默认数据库路径（用于测试）
-  if (dbPathInput) {
-    dbPathInput.value = './temp/test.db';
-  }
+    // 监听文件选择事件
+    window.addEventListener('file-selected', (e: Event) => {
+        const event = e as CustomEvent;
+        if (dbPathInput && event.detail.path) {
+            dbPathInput.value = event.detail.path;
+            fileExplorerWrapper.classList.add('hidden'); // 选择后自动隐藏
+        }
+    });
 </script>
