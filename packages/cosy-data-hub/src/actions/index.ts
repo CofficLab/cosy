@@ -5,7 +5,7 @@ import { getTableData } from './getTableData';
 import { executeQuery } from './executeQuery';
 import { createTestDatabase } from './createTestDatabase';
 
-export const actions = {
+export const server = {
   testConnection,
   connectToDatabase,
   getTables,
