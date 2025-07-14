@@ -3,9 +3,8 @@ import Layout from '../layout.astro';
 import TableData from '../components/TableData.astro';
 
 const name = Astro.url.searchParams.get('name');
-console.log(name);
 ---
 
 <Layout title="数据库">
-    {name}
+    <TableData tableName={name} />
 </Layout>

@@ -1,17 +1,18 @@
 ---
-import { Heading, Button } from '@coffic/cosy-ui';
+import { Button, Card } from '@coffic/cosy-ui';
 ---
 
-<div id="connectionStatus" class="hidden">
-    <div class="flex items-center justify-between">
-        <Heading level={2}>数据库</Heading>
-        <Button id="disconnectBtn" size="sm">断开</Button>
+<Card title="数据库连接">
+    <div id="connectionStatus" class="hidden">
+        <div class="flex items-center justify-between">
+            <Button id="disconnectBtn" size="sm">断开</Button>
+        </div>
+        <div
+            id="connectionInfo"
+            class="mt-2 text-sm text-gray-500 dark:text-gray-400 break-all">
+        </div>
     </div>
-    <div
-        id="connectionInfo"
-        class="mt-2 text-sm text-gray-500 dark:text-gray-400 break-all">
-    </div>
-</div>
+</Card>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

@@ -1,9 +1,7 @@
 ---
 import { DashboardLayout, type NavItem } from '@coffic/cosy-ui';
 import './styles/global.css';
-import TablesList from './components/TablesList.astro';
 import ConnectionStatus from './components/ConnectionStatus.astro';
-import { actions } from 'astro:actions';
 import { databaseManager } from './lib/database/database-manager';
 
 let navItems: NavItem[] = [];
@@ -28,10 +26,9 @@ const { title = 'Data Hub' } = Astro.props;
     systemName="Cosy Data Hub"
     navItems={navItems}
     userName="Developer"
-    mainPadding="none">
+    mainPadding="md">
     <slot />
     <div slot="sidebar-footer">
         <ConnectionStatus />
-        <TablesList />
     </div>
 </DashboardLayout>
