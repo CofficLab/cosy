@@ -1,7 +1,7 @@
 ---
-// DatabaseLayout.astro - 数据库管理主界面布局
 import TablesList from './TablesList.astro';
 import TableData from './TableData.astro';
+import { Button, Heading } from '@coffic/cosy-ui';
 ---
 
 <div class="h-screen flex bg-gray-50 dark:bg-gray-900">
@@ -11,15 +11,8 @@ import TableData from './TableData.astro';
         <!-- 连接状态头部 -->
         <div class="p-4 border-b border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between">
-                <h2
-                    class="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                    数据库连接
-                </h2>
-                <button
-                    id="disconnectBtn"
-                    class="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition-colors disabled:opacity-50">
-                    断开连接
-                </button>
+                <Heading level={2}>数据库连接</Heading>
+                <Button id="disconnectBtn"> 断开连接 </Button>
             </div>
             <div
                 id="connectionInfo"

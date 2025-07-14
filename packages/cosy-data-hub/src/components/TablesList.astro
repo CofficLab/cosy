@@ -1,17 +1,9 @@
 ---
-// TablesList.astro - 数据表列表组件（左侧导航栏）
-interface TableInfo {
-    name: string;
-    rowCount: number;
-    columns: Array<{ name: string; type: string }>;
-}
+import { Button, Heading } from '@coffic/cosy-ui';
 ---
 
 <div class="p-4">
-    <h3
-        class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
-        数据表
-    </h3>
+    <Heading level={3}>数据表</Heading>
 
     <div id="tablesContainer">
         <ul id="tablesList" class="space-y-1">
@@ -23,11 +15,7 @@ interface TableInfo {
 
     <!-- 刷新按钮 -->
     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <button
-            id="refreshTablesBtn"
-            class="w-full px-3 py-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-            刷新表列表
-        </button>
+        <Button id="refreshTablesBtn"> 刷新表列表 </Button>
     </div>
 </div>
 
@@ -36,7 +24,6 @@ interface TableInfo {
 
     const tablesList = document.getElementById('tablesList');
     const refreshTablesBtn = document.getElementById('refreshTablesBtn');
-    let currentSelectedTable: string | null = null;
 
     // 显示表列表
     function displayTables(tables: ITableInfo[]) {
@@ -105,8 +92,6 @@ interface TableInfo {
 
     // 更新选中状态
     function updateSelectedTable(tableName: string) {
-        currentSelectedTable = tableName;
-
         // 移除所有选中状态
         const allItems = tablesList?.querySelectorAll('li[data-table-name]');
         allItems?.forEach((item) => {
@@ -178,7 +163,6 @@ interface TableInfo {
 
     // 监听数据库断开连接事件
     window.addEventListener('database-disconnect', () => {
-        currentSelectedTable = null;
         if (tablesList) {
             tablesList.innerHTML = `
         <li class="text-gray-500 dark:text-gray-400 text-sm py-2">
