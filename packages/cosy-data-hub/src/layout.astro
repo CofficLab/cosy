@@ -12,7 +12,7 @@ const tables = await databaseManager.getTables();
 tables.forEach((table) => {
     navItems.push({
         text: table.name,
-        href: `/tables/${table.name}`,
+        href: `/table?name=${table.name}`,
     });
 });
 
