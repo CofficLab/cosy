@@ -6,11 +6,11 @@ import Layout from '../layout.astro';
 
 <Layout title="Cosy Data Hub - 数据库管理工具">
     <!-- 应用状态容器 -->
-    <div id="appContainer" class="h-screen">
+    <div id="appContainer" class="h-full">
         <!-- 连接配置页面 -->
         <div
             id="connectionPage"
-            class="h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+            class="h-full flex items-center justify-center">
             <div class="w-full max-w-4xl mx-auto p-6">
                 <div class="text-center mb-8">
                     <h1
@@ -35,7 +35,7 @@ import Layout from '../layout.astro';
         <!-- 加载状态 -->
         <div
             id="loadingPage"
-            class="hidden h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+            class="hidden h-full flex items-center justify-center">
             <div class="text-center">
                 <svg
                     class="animate-spin mx-auto w-12 h-12 text-blue-500 mb-4"
@@ -178,13 +178,3 @@ import Layout from '../layout.astro';
         connectionInfo,
     });
 </script>
-
-<style>
-    /* 确保页面占满整个高度 */
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-</style>
