@@ -22,6 +22,9 @@ import { Button } from '@coffic/cosy-ui';
             connectBtn.disabled = true;
             connectBtn.textContent = '连接中...';
 
+            // 触发连接开始事件
+            window.dispatchEvent(new CustomEvent('database-connection-start'));
+
             const result = await actions.connectToDatabase({
                 type: 'sqlite',
                 filename,
@@ -29,16 +32,42 @@ import { Button } from '@coffic/cosy-ui';
 
             if (result.data?.success) {
                 showStatus('数据库连接成功！', 'success');
-                // 触发自定义事件通知其他组件
-                window.dispatchEvent(new CustomEvent('database-connected'));
+
+                // 触发连接成功事件，传递连接信息
+                window.dispatchEvent(
+                    new CustomEvent('database-connected', {
+                        detail: {
+                            filename,
+                            type: 'sqlite',
+                            connectedAt: new Date().toISOString(),
+                        },
+                    })
+                );
             } else {
-                showStatus(
-                    `连接失败: ${result.data?.error || '未知错误'}`,
-                    'error'
+                const errorMessage = result.data?.error || '未知错误';
+                showStatus(`连接失败: ${errorMessage}`, 'error');
+
+                // 触发连接失败事件
+                window.dispatchEvent(
+                    new CustomEvent('database-connection-error', {
+                        detail: {
+                            error: errorMessage,
+                        },
+                    })
                 );
             }
         } catch (error) {
-            showStatus(`连接失败: ${(error as Error).message}`, 'error');
+            const errorMessage = (error as Error).message;
+            showStatus(`连接失败: ${errorMessage}`, 'error');
+
+            // 触发连接失败事件
+            window.dispatchEvent(
+                new CustomEvent('database-connection-error', {
+                    detail: {
+                        error: errorMessage,
+                    },
+                })
+            );
         } finally {
             connectBtn.disabled = false;
             connectBtn.textContent = '连接';

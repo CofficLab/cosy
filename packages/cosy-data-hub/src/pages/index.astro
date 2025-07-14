@@ -1,21 +1,190 @@
 ---
 import ConnectionConfig from '../components/ConnectionConfig.astro';
-import SqlQuery from '../components/SqlQuery.astro';
-import TableData from '../components/TableData.astro';
-import TablesList from '../components/TablesList.astro';
+import DatabaseLayout from '../components/DatabaseLayout.astro';
 import Layout from '../layout.astro';
 ---
 
-<Layout title="SQLite 数据库管理工具">
-    <!-- 连接配置组件 -->
-    <ConnectionConfig />
+<Layout title="Cosy Data Hub - 数据库管理工具">
+    <!-- 应用状态容器 -->
+    <div id="appContainer" class="h-screen">
+        <!-- 连接配置页面 -->
+        <div
+            id="connectionPage"
+            class="h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+            <div class="w-full max-w-4xl mx-auto p-6">
+                <div class="text-center mb-8">
+                    <h1
+                        class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                        Cosy Data Hub
+                    </h1>
+                    <p class="text-xl text-gray-600 dark:text-gray-400">
+                        强大的数据库管理工具
+                    </p>
+                </div>
 
-    <!-- 表列表组件 -->
-    <TablesList />
+                <!-- 连接配置组件 -->
+                <ConnectionConfig />
+            </div>
+        </div>
 
-    <!-- 表数据组件 -->
-    <TableData />
+        <!-- 数据库管理页面 -->
+        <div id="databasePage" class="hidden h-full">
+            <DatabaseLayout />
+        </div>
 
-    <!-- SQL 查询组件 -->
-    <SqlQuery />
+        <!-- 加载状态 -->
+        <div
+            id="loadingPage"
+            class="hidden h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+            <div class="text-center">
+                <svg
+                    class="animate-spin mx-auto w-12 h-12 text-blue-500 mb-4"
+                    fill="none"
+                    viewBox="0 0 24 24">
+                    <circle
+                        class="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="4"></circle>
+                    <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                </svg>
+                <p class="text-lg text-gray-600 dark:text-gray-400">
+                    连接数据库中...
+                </p>
+            </div>
+        </div>
+    </div>
 </Layout>
+
+<script>
+    // 页面元素
+    const connectionPage = document.getElementById('connectionPage');
+    const databasePage = document.getElementById('databasePage');
+    const loadingPage = document.getElementById('loadingPage');
+
+    // 应用状态
+    let isConnected = false;
+    let connectionInfo: any = null;
+
+    // 显示连接页面
+    function showConnectionPage() {
+        connectionPage?.classList.remove('hidden');
+        databasePage?.classList.add('hidden');
+        loadingPage?.classList.add('hidden');
+    }
+
+    // 显示数据库页面
+    function showDatabasePage() {
+        connectionPage?.classList.add('hidden');
+        databasePage?.classList.remove('hidden');
+        loadingPage?.classList.add('hidden');
+    }
+
+    // 显示加载页面
+    function showLoadingPage() {
+        connectionPage?.classList.add('hidden');
+        databasePage?.classList.add('hidden');
+        loadingPage?.classList.remove('hidden');
+    }
+
+    // 处理数据库连接成功
+    function handleDatabaseConnected(event: CustomEvent) {
+        isConnected = true;
+        connectionInfo = event.detail;
+
+        // 显示数据库管理界面
+        showDatabasePage();
+
+        // 触发连接信息更新事件，让其他组件获取连接信息
+        window.dispatchEvent(
+            new CustomEvent('connection-info-updated', {
+                detail: connectionInfo,
+            })
+        );
+
+        // 通知其他组件数据库已连接
+        window.dispatchEvent(new CustomEvent('database-connected'));
+    }
+
+    // 处理数据库断开连接
+    function handleDatabaseDisconnected() {
+        isConnected = false;
+        connectionInfo = null;
+
+        // 显示连接配置页面
+        showConnectionPage();
+
+        // 通知其他组件数据库已断开
+        window.dispatchEvent(new CustomEvent('database-disconnected'));
+    }
+
+    // 处理连接开始
+    function handleConnectionStart() {
+        showLoadingPage();
+    }
+
+    // 处理连接失败
+    function handleConnectionError(event: CustomEvent) {
+        showConnectionPage();
+
+        // 显示错误信息
+        const errorMessage = event.detail?.error || '连接失败';
+        console.error('Database connection error:', errorMessage);
+
+        // 可以在这里添加错误提示显示逻辑
+    }
+
+    // 事件监听
+    window.addEventListener('database-connection-start', handleConnectionStart);
+    window.addEventListener(
+        'database-connected',
+        handleDatabaseConnected as EventListener
+    );
+    window.addEventListener(
+        'database-connection-error',
+        handleConnectionError as EventListener
+    );
+    window.addEventListener('database-disconnect', handleDatabaseDisconnected);
+
+    // 页面加载完成后的初始化
+    document.addEventListener('DOMContentLoaded', () => {
+        // 检查是否已有连接（页面刷新后恢复状态）
+        checkExistingConnection();
+    });
+
+    // 检查现有连接状态
+    async function checkExistingConnection() {
+        try {
+            // 这里可以添加检查现有连接的逻辑
+            // 比如从 localStorage 获取上次的连接信息，或者调用后端 API 检查连接状态
+
+            // 暂时直接显示连接页面
+            showConnectionPage();
+        } catch (error) {
+            console.error('Failed to check existing connection:', error);
+            showConnectionPage();
+        }
+    }
+
+    // 全局状态访问器（供其他组件使用）
+    (window as any).getAppState = () => ({
+        isConnected,
+        connectionInfo,
+    });
+</script>
+
+<style>
+    /* 确保页面占满整个高度 */
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
