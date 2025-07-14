@@ -1,0 +1,68 @@
+---
+import { Heading, Button } from '@coffic/cosy-ui';
+---
+
+<div id="connectionStatus" class="hidden">
+    <div class="flex items-center justify-between">
+        <Heading level={2}>数据库</Heading>
+        <Button id="disconnectBtn" size="sm">断开</Button>
+    </div>
+    <div
+        id="connectionInfo"
+        class="mt-2 text-sm text-gray-500 dark:text-gray-400 break-all">
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const disconnectBtn = document.getElementById(
+            'disconnectBtn'
+        ) as HTMLButtonElement;
+        const connectionInfoEl = document.getElementById('connectionInfo');
+        const connectionStatusEl = document.getElementById('connectionStatus');
+
+        function updateConnectionStatus() {
+            if (!connectionInfoEl || !connectionStatusEl) return;
+
+            const lastConnectionPath =
+                localStorage.getItem('lastConnectionPath');
+            if (lastConnectionPath) {
+                connectionInfoEl.textContent = `文件: ${lastConnectionPath}`;
+                connectionStatusEl.classList.remove('hidden');
+            } else {
+                connectionStatusEl.classList.add('hidden');
+            }
+        }
+
+        if (disconnectBtn) {
+            disconnectBtn.addEventListener('click', async () => {
+                try {
+                    disconnectBtn.disabled = true;
+                    disconnectBtn.textContent = '断开中...';
+
+                    const { actions } = await import('astro:actions');
+                    await actions.disconnectDatabase({});
+
+                    localStorage.removeItem('lastConnectionPath');
+                    window.dispatchEvent(
+                        new CustomEvent('database-disconnected')
+                    );
+                } catch (error) {
+                    console.error('断开连接失败:', (error as Error).message);
+                } finally {
+                    disconnectBtn.disabled = false;
+                    disconnectBtn.textContent = '断开';
+                }
+            });
+        }
+
+        window.addEventListener('database-connected', updateConnectionStatus);
+        window.addEventListener('database-disconnected', () => {
+            localStorage.removeItem('lastConnectionPath');
+            window.location.href = '/connect';
+        });
+
+        // Initial check
+        updateConnectionStatus();
+    });
+</script>
