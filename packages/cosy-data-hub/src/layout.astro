@@ -3,8 +3,18 @@ import { DashboardLayout, type NavItem } from '@coffic/cosy-ui';
 import './styles/global.css';
 import TablesList from './components/TablesList.astro';
 import ConnectionStatus from './components/ConnectionStatus.astro';
+import { actions } from 'astro:actions';
+import { databaseManager } from './lib/database/database-manager';
 
-const navItems: NavItem[] = [];
+let navItems: NavItem[] = [];
+
+const tables = await databaseManager.getTables();
+tables.forEach((table) => {
+    navItems.push({
+        text: table.name,
+        href: `/tables/${table.name}`,
+    });
+});
 
 export interface Props {
     title?: string;
