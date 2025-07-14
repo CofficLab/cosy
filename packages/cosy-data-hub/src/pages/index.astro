@@ -1,7 +1,8 @@
 ---
 import ConnectionConfig from '../components/ConnectionConfig.astro';
-import DatabaseLayout from '../components/DatabaseLayout.astro';
 import Layout from '../layout.astro';
+import TableData from '../components/TableData.astro';
+import { Button, Heading } from '@coffic/cosy-ui';
 ---
 
 <Layout title="Cosy Data Hub - 数据库管理工具">
@@ -29,7 +30,12 @@ import Layout from '../layout.astro';
 
         <!-- 数据库管理页面 -->
         <div id="databasePage" class="hidden h-full">
-            <DatabaseLayout />
+            <div class="flex-1 flex flex-col overflow-hidden">
+                <!-- 表数据展示区域 -->
+                <div class="flex-1 overflow-y-auto p-6">
+                    <TableData />
+                </div>
+            </div>
         </div>
 
         <!-- 加载状态 -->
@@ -67,10 +73,14 @@ import Layout from '../layout.astro';
     const connectionPage = document.getElementById('connectionPage');
     const databasePage = document.getElementById('databasePage');
     const loadingPage = document.getElementById('loadingPage');
+    const disconnectBtn = document.getElementById(
+        'disconnectBtn'
+    ) as HTMLButtonElement;
+    const connectionInfo = document.getElementById('connectionInfo');
 
     // 应用状态
     let isConnected = false;
-    let connectionInfo: any = null;
+    let connectionInfoData: any = null;
 
     // 显示连接页面
     function showConnectionPage() {
@@ -96,7 +106,15 @@ import Layout from '../layout.astro';
     // 处理数据库连接成功
     function handleDatabaseConnected(event: CustomEvent) {
         isConnected = true;
-        connectionInfo = event.detail;
+        connectionInfoData = event.detail;
+
+        // 保存连接信息到 localStorage
+        if (connectionInfoData.filename) {
+            localStorage.setItem(
+                'lastConnectionPath',
+                connectionInfoData.filename
+            );
+        }
 
         // 显示数据库管理界面
         showDatabasePage();
@@ -104,18 +122,18 @@ import Layout from '../layout.astro';
         // 触发连接信息更新事件，让其他组件获取连接信息
         window.dispatchEvent(
             new CustomEvent('connection-info-updated', {
-                detail: connectionInfo,
+                detail: connectionInfoData,
             })
         );
-
-        // 通知其他组件数据库已连接
-        window.dispatchEvent(new CustomEvent('database-connected'));
     }
 
     // 处理数据库断开连接
     function handleDatabaseDisconnected() {
         isConnected = false;
-        connectionInfo = null;
+        connectionInfoData = null;
+
+        // 移除 localStorage 中的连接信息
+        localStorage.removeItem('lastConnectionPath');
 
         // 显示连接配置页面
         showConnectionPage();
@@ -140,6 +158,53 @@ import Layout from '../layout.astro';
         // 可以在这里添加错误提示显示逻辑
     }
 
+    // 断开连接
+    if (disconnectBtn) {
+        disconnectBtn.addEventListener('click', async () => {
+            const btn = disconnectBtn as HTMLButtonElement;
+            try {
+                btn.disabled = true;
+                btn.textContent = '断开中...';
+
+                // 调用断开连接 action
+                const { actions } = await import('astro:actions');
+                const result = await actions.disconnectDatabase({});
+
+                if (result.data?.success) {
+                    // 触发断开连接事件
+                    window.dispatchEvent(
+                        new CustomEvent('database-disconnect')
+                    );
+                } else {
+                    console.error('断开连接失败:', result.data?.error);
+                    // 即使失败也触发断开连接事件，让界面返回到连接页面
+                    window.dispatchEvent(
+                        new CustomEvent('database-disconnect')
+                    );
+                }
+            } catch (error) {
+                console.error('断开连接失败:', (error as Error).message);
+                // 即使失败也触发断开连接事件，让界面返回到连接页面
+                window.dispatchEvent(new CustomEvent('database-disconnect'));
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '断开连接';
+            }
+        });
+    }
+
+    // 监听连接状态更新
+    window.addEventListener('connection-info-updated', (e: Event) => {
+        const event = e as CustomEvent;
+        if (connectionInfo && event.detail) {
+            const { filename, connectedAt } = event.detail;
+            connectionInfo.innerHTML = `
+        <div>文件: ${filename}</div>
+        <div>连接时间: ${new Date(connectedAt).toLocaleString()}</div>
+      `;
+        }
+    });
+
     // 事件监听
     window.addEventListener('database-connection-start', handleConnectionStart);
     window.addEventListener(
@@ -160,14 +225,52 @@ import Layout from '../layout.astro';
 
     // 检查现有连接状态
     async function checkExistingConnection() {
-        try {
-            // 这里可以添加检查现有连接的逻辑
-            // 比如从 localStorage 获取上次的连接信息，或者调用后端 API 检查连接状态
+        const lastConnectionPath = localStorage.getItem('lastConnectionPath');
+        if (lastConnectionPath) {
+            showLoadingPage();
+            try {
+                const { actions } = await import('astro:actions');
+                const result = await actions.connectToDatabase({
+                    type: 'sqlite',
+                    filename: lastConnectionPath,
+                });
 
-            // 暂时直接显示连接页面
-            showConnectionPage();
-        } catch (error) {
-            console.error('Failed to check existing connection:', error);
+                // 首先检查 action 本身是否出错
+                if (result.error) {
+                    throw new Error(result.error.message);
+                }
+
+                if (result.data.success) {
+                    // 触发连接成功事件，后续逻辑由事件监听器处理
+                    window.dispatchEvent(
+                        new CustomEvent('database-connected', {
+                            detail: {
+                                filename: lastConnectionPath,
+                                connectedAt: new Date().toISOString(),
+                                connectionId: result.data.connectionId,
+                            },
+                        })
+                    );
+                } else {
+                    window.dispatchEvent(
+                        new CustomEvent('database-connection-error', {
+                            detail: {
+                                error: result.data.error || '自动重新连接失败',
+                            },
+                        })
+                    );
+                    localStorage.removeItem('lastConnectionPath'); // 清除无效的路径
+                }
+            } catch (error) {
+                window.dispatchEvent(
+                    new CustomEvent('database-connection-error', {
+                        detail: { error: (error as Error).message },
+                    })
+                );
+                localStorage.removeItem('lastConnectionPath'); // 清除无效的路径
+            }
+        } else {
+            // 暂无保存的连接，显示连接页面
             showConnectionPage();
         }
     }
@@ -175,6 +278,6 @@ import Layout from '../layout.astro';
     // 全局状态访问器（供其他组件使用）
     (window as any).getAppState = () => ({
         isConnected,
-        connectionInfo,
+        connectionInfo: connectionInfoData,
     });
 </script>
